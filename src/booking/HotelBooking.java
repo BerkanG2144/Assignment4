@@ -13,7 +13,7 @@ public class HotelBooking {
         Map<String, Command> commands = new HashMap<>();
         commands.put("add hotel", new AddHotelCommand(hotels));
         commands.put("remove hotel", new RemoveHotelCommand(hotels));
-        // commands.put("list rooms", new ListRoomsCommand(hotels));
+        commands.put("add room", new AddRoomCommand(hotels));
 
         while (true) {
             System.out.print("> ");

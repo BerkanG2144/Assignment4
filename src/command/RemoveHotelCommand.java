@@ -4,7 +4,7 @@ import booking.Hotel;
 import java.util.Map;
 
 /**
- * Command to add a room to a hotel.
+ * Command to add a remove a room from a hotel.
  */
 public class RemoveHotelCommand implements Command {
     private final Map<Integer, Hotel> hotels;

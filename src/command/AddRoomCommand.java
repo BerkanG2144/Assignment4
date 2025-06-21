@@ -1,6 +1,8 @@
 package command;
 import booking.Hotel;
+import booking.Room;
 
+import java.sql.SQLOutput;
 import java.util.Map;
 
 /**
@@ -15,23 +17,32 @@ public class AddRoomCommand implements Command {
 
     @Override
     public void execute(String[] args) {
-        if (args.length != 3) {
-            System.out.println("Error, usage: remove hotel <HotelID>");
+        if (args.length != 6) {
+            System.out.println("Error, usage: add room <HotelID> <RoomId> <Category> <Price>");
             return;
         }
 
         try {
             int hotelId = Integer.parseInt(args[2]);
+            int roomNumber = Integer.parseInt(args[3]);
+            String category = args[4];
+            double price = Double.parseDouble(args[5]);
 
-            if (!hotels.containsKey(hotelId)) {
-                System.out.println("Error, hotel not found");
+            Hotel hotel = hotels.get(hotelId);
+            if (hotel == null) {
+                System.out.println("Error, hotel does not exist");
                 return;
             }
 
-            hotels.remove(hotelId);
+            if (hotel.getRooms().containsKey(roomNumber)) {
+                System.out.println("Error, room already exists");
+            }
+
+            hotel.addRoom(new Room(roomNumber, category, price));
             System.out.println("OK");
+
         } catch (NumberFormatException e) {
-            System.out.println("Error, invalid HotelId");
+            System.out.println("Error, number format");
         }
     }
 }

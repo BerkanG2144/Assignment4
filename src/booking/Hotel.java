@@ -2,6 +2,7 @@ package booking;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
 
 public class Hotel {
     private final int id;
@@ -23,7 +24,7 @@ public class Hotel {
     }
 
     public Map<Integer, Room> getRooms() {
-        return rooms;
+        return Collections.unmodifiableMap(rooms);
     }
 
     //Wenn noch kein Zimmer mit dieser Nummer existiert, wird es eingefügt → Rückgabe: null.
