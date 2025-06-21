@@ -14,6 +14,8 @@ public class HotelBooking {
         commands.put("add hotel", new AddHotelCommand(hotels));
         commands.put("remove hotel", new RemoveHotelCommand(hotels));
         commands.put("add room", new AddRoomCommand(hotels));
+        commands.put("remove room", new RemoveRoomCommand(hotels));
+        commands.put("list rooms", new ListRoomsCommand(hotels));
 
         while (true) {
             System.out.print("> ");
