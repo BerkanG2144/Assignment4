@@ -4,11 +4,14 @@ import command.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelBooking {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Map<Integer, Hotel> hotels = new HashMap<>();
+        CustomerManager customerManager = new CustomerManager();
+        AtomicInteger bookingIdGenerator = new AtomicInteger(1);
 
         Map<String, Command> commands = new HashMap<>();
         commands.put("add hotel", new AddHotelCommand(hotels));
@@ -18,6 +21,7 @@ public class HotelBooking {
         commands.put("list rooms", new ListRoomsCommand(hotels));
         commands.put("find available", new FindAvailableCommand(hotels));
         commands.put("find cheapest", new FindCheapestCommand(hotels));
+        commands.put("book", new BookCommand(hotels, customerManager, bookingIdGenerator));
 
         // === Testdaten aus der Beispielinteraktion (optional abschaltbar) ===
         String[] testInput = {
@@ -38,7 +42,8 @@ public class HotelBooking {
                 "find available Berlin Double 2025-08-01 2025-08-12",
                 "find available Karlsruhe Double 2025-08-01 2025-08-12",
                 "find cheapest Berlin Single 2025-08-01 2025-08-12",
-                "find cheapest Karlsruhe Single 2025-08-01 2025-08-12"
+                "find cheapest Karlsruhe Single 2025-08-01 2025-08-12",
+                "book 00012 1 2025-08-01 2025-08-12 Simon Student"
         };
 
         for (String input : testInput) {
@@ -47,7 +52,13 @@ public class HotelBooking {
                 System.out.println("Error, unknown command");
                 continue;
             }
-            String commandKey = parts[0] + " " + parts[1];
+            String commandKey;
+            if (parts[0].equals("book") || parts[0].equals("list") || parts[0].equals("cancel") || parts[0].equals("quit")) {
+                commandKey = parts[0];
+            } else {
+                commandKey = parts[0] + " " + parts[1];
+            }
+
             Command command = commands.get(commandKey);
             if (command != null) {
                 command.execute(parts);
