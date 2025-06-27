@@ -1,22 +1,39 @@
 package command;
+
 import booking.Hotel;
 
 import java.util.Map;
 
 /**
- * Command to add a room to a hotel.
+ * Command to add a new hotel to the system.
+ *
+ * If the hotel ID is already used or the format is incorrect,
+ * an error message is printed. Otherwise, a new hotel is added.
+ *
+ * @author ujnaa
  */
 public class AddHotelCommand implements Command {
+
     private final Map<Integer, Hotel> hotels;
 
+    /**
+     * Constructs the command with the shared hotel map.
+     *
+     * @param hotels the map of hotels, indexed by their hotel ID
+     */
     public AddHotelCommand(Map<Integer, Hotel> hotels) {
         this.hotels = hotels;
     }
 
+    /**
+     * Executes the command to add a hotel.
+     *
+     * @param args the input arguments
+     */
     @Override
     public void execute(String[] args) {
         if (args.length != 4) {
-            System.out.println("Error, usage: add room <HotelID> <City>");
+            System.out.println("Error, usage: add hotel <HotelID> <City>");
             return;
         }
 
@@ -37,9 +54,13 @@ public class AddHotelCommand implements Command {
         }
     }
 
+    /**
+     * Returns the command keyword that this command responds to.
+     *
+     * @return the keyword "add hotel"
+     */
     @Override
     public String keyword() {
         return "add hotel";
     }
-
 }

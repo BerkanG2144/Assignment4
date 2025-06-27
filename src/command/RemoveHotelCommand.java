@@ -1,14 +1,27 @@
 package command;
+
 import booking.Hotel;
 
 import java.util.Map;
 
 /**
- * Command to add a remove a room from a hotel.
+ * Command to remove a hotel from the system.
+ *
+ * Usage: {@code remove hotel <HotelID>}
+ *
+ * The hotel is removed only if it exists.
+ *
+ * @author ujnaa
  */
 public class RemoveHotelCommand implements Command {
+
     private final Map<Integer, Hotel> hotels;
 
+    /**
+     * Constructs the command with access to the hotel map.
+     *
+     * @param hotels the map of hotels
+     */
     public RemoveHotelCommand(Map<Integer, Hotel> hotels) {
         this.hotels = hotels;
     }

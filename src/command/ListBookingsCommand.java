@@ -1,15 +1,24 @@
 package command;
 
-import booking.*;
+import booking.Booking;
+import booking.BookingManager;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-
-public class ListBookingsCommand implements Command{
+/**
+ * Command to list all active (non-cancelled) bookings sorted by booking ID.
+ *
+ * @author ujnaa
+ */
+public class ListBookingsCommand implements Command {
 
     private final BookingManager bookingManager;
 
+    /**
+     * Constructs the command to list bookings.
+     *
+     * @param bookingManager the manager providing access to all bookings
+     */
     public ListBookingsCommand(BookingManager bookingManager) {
         this.bookingManager = bookingManager;
     }
@@ -28,7 +37,7 @@ public class ListBookingsCommand implements Command{
         for (Booking booking : bookings) {
             System.out.printf("%d %d %s %s%n",
                     booking.bookingId(),
-                    booking.customer().customerId(),
+                    booking.customer().getCustomerId(),
                     booking.dateRange().from(),
                     booking.dateRange().to()
             );

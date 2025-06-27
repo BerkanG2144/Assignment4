@@ -1,9 +1,23 @@
 package command;
 
+/**
+ * Command to quit the booking system.
+ *
+ * Usage: {@code quit}
+ *
+ * Invokes a callback to stop the main loop without using System.exit().
+ *
+ * @author ujnaa
+ */
 public class QuitCommand implements Command {
 
     private final Runnable quitCallback;
 
+    /**
+     * Constructs a quit command that triggers the given callback.
+     *
+     * @param quitCallback the action to perform on quit (e.g., stopping main loop)
+     */
     public QuitCommand(Runnable quitCallback) {
         this.quitCallback = quitCallback;
     }

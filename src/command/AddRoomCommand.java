@@ -1,20 +1,37 @@
 package command;
+
 import booking.Hotel;
 import booking.Room;
 
-import java.sql.SQLOutput;
 import java.util.Map;
 
 /**
- * Command to add a room to a hotel.
+ * Command to add a new room to a hotel.
+ *
+ * If the hotel does not exist or the format is invalid, an error is printed.
+ * If the room already exists in the hotel, an error is printed.
+ * Otherwise, the room is added successfully.
+ *
+ * @author ujnaa
  */
 public class AddRoomCommand implements Command {
+
     private final Map<Integer, Hotel> hotels;
 
+    /**
+     * Constructs the command with the map of hotels.
+     *
+     * @param hotels the map of hotels, indexed by hotel ID
+     */
     public AddRoomCommand(Map<Integer, Hotel> hotels) {
         this.hotels = hotels;
     }
 
+    /**
+     * Executes the command to add a room.
+     *
+     * @param args the user input split into string arguments
+     */
     @Override
     public void execute(String[] args) {
         if (args.length != 6) {
@@ -34,12 +51,12 @@ public class AddRoomCommand implements Command {
                 return;
             }
 
-            boolean added = hotel.addRoom(new Room(roomNumber, category, price));
-            if (!added) {
+            if (hotel.getRooms().containsKey(roomNumber)) {
                 System.out.println("Error, room already exists");
                 return;
             }
 
+            hotel.addRoom(new Room(roomNumber, category, price));
             System.out.println("OK");
 
         } catch (NumberFormatException e) {
@@ -47,9 +64,13 @@ public class AddRoomCommand implements Command {
         }
     }
 
+    /**
+     * Returns the command keyword that triggers this command.
+     *
+     * @return the keyword "add room"
+     */
     @Override
     public String keyword() {
         return "add room";
     }
-
 }

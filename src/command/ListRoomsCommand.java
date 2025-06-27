@@ -1,6 +1,7 @@
 package command;
 
-import booking.*;
+import booking.Hotel;
+import booking.Room;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,12 +10,21 @@ import java.util.Map;
 
 /**
  * Command to list all rooms sorted by hotel ID and room number.
- * @author u...
+ * Each line contains: {@code <HotelID> <RoomNumber> <Category> <Price>}.
+ *
+ * Example output: {@code 00011 101 Single 11.99e}
+ *
+ * @author ujnaa
  */
 public class ListRoomsCommand implements Command {
 
     private final Map<Integer, Hotel> hotels;
 
+    /**
+     * Constructs a command to list all rooms.
+     *
+     * @param hotels the map of hotels to extract rooms from
+     */
     public ListRoomsCommand(Map<Integer, Hotel> hotels) {
         this.hotels = hotels;
     }
@@ -39,32 +49,31 @@ public class ListRoomsCommand implements Command {
     }
 
     /**
-         * Helper class for room sorting and output.
-         */
-        private record RoomEntry(int hotelId, Room room) implements Comparable<RoomEntry> {
+     * Helper class for room sorting and output.
+     */
+    private record RoomEntry(int hotelId, Room room) implements Comparable<RoomEntry> {
 
         @Override
-            public int compareTo(RoomEntry other) {
-                int result = Integer.compare(this.hotelId, other.hotelId);
-                if (result != 0) {
-                    return result;
-                }
-                return Integer.compare(this.room.getNumber(), other.room.getNumber());
+        public int compareTo(RoomEntry other) {
+            int result = Integer.compare(this.hotelId, other.hotelId);
+            if (result != 0) {
+                return result;
             }
-
-            @Override
-            public String toString() {
-                return String.format("%05d %d %s %.2fe",
-                        hotelId,
-                        room.getNumber(),
-                        room.getCategory(),
-                        room.getPrice());
-            }
+            return Integer.compare(this.room.getNumber(), other.room.getNumber());
         }
+
+        @Override
+        public String toString() {
+            return String.format("%05d %d %s %.2fe",
+                    hotelId,
+                    room.getNumber(),
+                    room.getCategory(),
+                    room.getPrice());
+        }
+    }
 
     @Override
     public String keyword() {
         return "list rooms";
     }
-
 }

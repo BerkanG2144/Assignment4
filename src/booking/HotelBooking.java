@@ -1,12 +1,39 @@
 package booking;
-import command.*;
+
+import command.AddHotelCommand;
+import command.RemoveHotelCommand;
+import command.AddRoomCommand;
+import command.RemoveRoomCommand;
+import command.ListRoomsCommand;
+import command.FindAvailableCommand;
+import command.FindCheapestCommand;
+import command.BookCommand;
+import command.ListBookingsCommand;
+import command.CancelCommand;
+import command.QuitCommand;
+import command.Command;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class HotelBooking {
+/**
+ * Main class for the hotel booking system.
+ * Handles user input and delegates commands.
+ *
+ * @author ujnaa
+ */
+public final class HotelBooking {
+
+    private HotelBooking() {
+        // prevents instantiation
+    }
+    /**
+     * Main method for starting the booking system.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Map<Integer, Hotel> hotels = new HashMap<>();
@@ -33,53 +60,7 @@ public class HotelBooking {
             commands.put(c.keyword(), c);
         }
 
-
-        // === Testdaten aus der Beispielinteraktion (optional abschaltbar) ===
-        String[] testInput = {
-                "add hotel 11 Berlin",
-                "add hotel 12 Karlsruhe",
-                "add hotel 13 Karlsruhe",
-                "add room 11 101 Single 11.99",
-                "add room 11 102 Single 11.99",
-                "add room 11 103 Double 24.99",
-                "add room 11 104 Double 25.99",
-                "remove room 11 104",
-                "add room 12 1 Single 8.99",
-                "add room 12 2 Suite 399.99",
-                "add room 13 001 Single 25.99",
-                "add room 13 002 Double 25.99",
-                "list rooms",
-                "find available Berlin Suite 2025-08-01 2025-08-12",
-                "find available Berlin Double 2025-08-01 2025-08-12",
-                "find available Karlsruhe Double 2025-08-01 2025-08-12",
-                "find cheapest Berlin Single 2025-08-01 2025-08-12",
-                "find cheapest Karlsruhe Single 2025-08-01 2025-08-12",
-                "book 00012 1 2025-08-01 2025-08-12 Simon Student",
-                "list bookings",
-                "find cheapest Karlsruhe Single 2025-08-01 2025-08-12",
-                "find cheapest Karlsruhe Single 2025-08-05 2025-08-07",
-                "find cheapest Karlsruhe Single 2025-08-11 2025-08-22",
-                "remove hotel 13",
-                "find cheapest Karlsruhe Single 2025-08-11 2025-08-22",
-                "cancel 1 1",
-                "find cheapest Karlsruhe Single 2025-08-11 2025-08-22"
-        };
-
-        for (String input : testInput) {
-            String[] parts = input.split("\\s+");
-            String commandKey = extractCommandKey(parts, commands);
-
-            if (commandKey == null) {
-                System.out.println("Error, unknown command");
-                continue;
-            }
-
-            commands.get(commandKey).execute(parts);
-        }
-
-
         while (running[0]) {
-            System.out.print("> ");
             String input = scanner.nextLine().trim();
             String[] parts = input.split("\\s+");
 
@@ -93,8 +74,16 @@ public class HotelBooking {
             commands.get(commandKey).execute(parts);
         }
 
+        scanner.close();
     }
 
+    /**
+     * Extracts the command key from the input parts.
+     *
+     * @param parts    the split input string
+     * @param commands the map of available commands
+     * @return the matched command key or null if unknown
+     */
     private static String extractCommandKey(String[] parts, Map<String, Command> commands) {
         if (parts.length >= 2) {
             String twoWord = parts[0] + " " + parts[1];

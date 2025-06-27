@@ -15,7 +15,7 @@ import java.util.Map;
  * Command to find available rooms in a given city and category for a date range.
  * Prints matching rooms sorted by hotel ID and room number.
  *
- * @author uXXXX
+ * @author ujnaa
  */
 public class FindAvailableCommand implements Command {
 

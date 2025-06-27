@@ -4,7 +4,7 @@ package booking;
  * Represents an available room for display in the find available command.
  * Contains hotel ID, room number, and price per night.
  *
- * @author uXXXX
+ * @author ujnaa
  */
 public final class AvailableRoom {
 
