@@ -10,14 +10,14 @@ public class BookCommand implements Command {
 
     private final Map<Integer, Hotel> hotels;
     private final CustomerManager customerManager;
-    private final AtomicInteger bookingIdGenerator;
+    private final BookingManager bookingManager;
 
     public BookCommand(Map<Integer, Hotel> hotels,
                        CustomerManager customerManager,
-                       AtomicInteger bookingIdGenerator) {
+                       BookingManager bookingManager) {
         this.hotels = hotels;
         this.customerManager = customerManager;
-        this.bookingIdGenerator = bookingIdGenerator;
+        this.bookingManager = bookingManager;
     }
 
     @Override
@@ -64,11 +64,16 @@ public class BookCommand implements Command {
         }
 
 
-        int bookingId = bookingIdGenerator.getAndIncrement();
-        Booking booking = new Booking(bookingId, customer, range);
+        Booking booking = bookingManager.createBooking(customer, range);
         room.addBooking(booking);
 
-        System.out.println(bookingId + " " + customerId);
+        System.out.println(booking.bookingId() + " " + customerId);
 
     }
+
+    @Override
+    public String keyword() {
+        return "book";
+    }
+
 }

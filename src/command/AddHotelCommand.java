@@ -36,4 +36,10 @@ public class AddHotelCommand implements Command {
             System.out.println("Error, invalid number format");
         }
     }
+
+    @Override
+    public String keyword() {
+        return "add hotel";
+    }
+
 }

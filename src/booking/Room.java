@@ -45,12 +45,17 @@ public class Room {
         return true;
     }
 
+    public boolean hasBooking(int bookingId) {
+        return bookings.stream().anyMatch(b -> b.bookingId() == bookingId);
+    }
+
+
     public void addBooking(Booking booking) {
         bookings.add(booking);
     }
 
-    public void removeBooking(Booking booking) {
-        bookings.remove(booking);
+    public void removeBooking(int bookingId) {
+        bookings.removeIf(b -> b.bookingId() == bookingId);
     }
 
 }

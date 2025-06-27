@@ -100,5 +100,11 @@ public class FindCheapestCommand implements Command{
 
     }
 
+    @Override
+    public String keyword() {
+        return "find cheapest";
+    }
+
+
 }
 

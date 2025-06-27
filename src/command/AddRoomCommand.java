@@ -45,4 +45,10 @@ public class AddRoomCommand implements Command {
             System.out.println("Error, number format");
         }
     }
+
+    @Override
+    public String keyword() {
+        return "add room";
+    }
+
 }

@@ -2,26 +2,37 @@ package booking;
 import command.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class HotelBooking {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Map<Integer, Hotel> hotels = new HashMap<>();
         CustomerManager customerManager = new CustomerManager();
-        AtomicInteger bookingIdGenerator = new AtomicInteger(1);
+        BookingManager bookingManager = new BookingManager();
+        boolean[] running = {true};
+
+        List<Command> commandList = List.of(
+                new AddHotelCommand(hotels),
+                new RemoveHotelCommand(hotels),
+                new AddRoomCommand(hotels),
+                new RemoveRoomCommand(hotels),
+                new ListRoomsCommand(hotels),
+                new FindAvailableCommand(hotels),
+                new FindCheapestCommand(hotels),
+                new BookCommand(hotels, customerManager, bookingManager),
+                new ListBookingsCommand(bookingManager),
+                new CancelCommand(bookingManager, hotels),
+                new QuitCommand(() -> running[0] = false)
+        );
 
         Map<String, Command> commands = new HashMap<>();
-        commands.put("add hotel", new AddHotelCommand(hotels));
-        commands.put("remove hotel", new RemoveHotelCommand(hotels));
-        commands.put("add room", new AddRoomCommand(hotels));
-        commands.put("remove room", new RemoveRoomCommand(hotels));
-        commands.put("list rooms", new ListRoomsCommand(hotels));
-        commands.put("find available", new FindAvailableCommand(hotels));
-        commands.put("find cheapest", new FindCheapestCommand(hotels));
-        commands.put("book", new BookCommand(hotels, customerManager, bookingIdGenerator));
+        for (Command c : commandList) {
+            commands.put(c.keyword(), c);
+        }
+
 
         // === Testdaten aus der Beispielinteraktion (optional abschaltbar) ===
         String[] testInput = {
@@ -43,49 +54,57 @@ public class HotelBooking {
                 "find available Karlsruhe Double 2025-08-01 2025-08-12",
                 "find cheapest Berlin Single 2025-08-01 2025-08-12",
                 "find cheapest Karlsruhe Single 2025-08-01 2025-08-12",
-                "book 00012 1 2025-08-01 2025-08-12 Simon Student"
+                "book 00012 1 2025-08-01 2025-08-12 Simon Student",
+                "list bookings",
+                "find cheapest Karlsruhe Single 2025-08-01 2025-08-12",
+                "find cheapest Karlsruhe Single 2025-08-05 2025-08-07",
+                "find cheapest Karlsruhe Single 2025-08-11 2025-08-22",
+                "remove hotel 13",
+                "find cheapest Karlsruhe Single 2025-08-11 2025-08-22",
+                "cancel 1 1",
+                "find cheapest Karlsruhe Single 2025-08-11 2025-08-22"
         };
 
         for (String input : testInput) {
             String[] parts = input.split("\\s+");
-            if (parts.length < 2) {
+            String commandKey = extractCommandKey(parts, commands);
+
+            if (commandKey == null) {
                 System.out.println("Error, unknown command");
                 continue;
             }
-            String commandKey;
-            if (parts[0].equals("book") || parts[0].equals("list") || parts[0].equals("cancel") || parts[0].equals("quit")) {
-                commandKey = parts[0];
-            } else {
-                commandKey = parts[0] + " " + parts[1];
-            }
 
-            Command command = commands.get(commandKey);
-            if (command != null) {
-                command.execute(parts);
-            } else {
-                System.out.println("Error, unknown command");
-            }
+            commands.get(commandKey).execute(parts);
         }
 
-        // === Danach normale Benutzereingabe starten ===
-        while (true) {
+
+        while (running[0]) {
             System.out.print("> ");
             String input = scanner.nextLine().trim();
-
             String[] parts = input.split("\\s+");
-            if (parts.length < 2) {
+
+            String commandKey = extractCommandKey(parts, commands);
+
+            if (commandKey == null) {
                 System.out.println("Error, unknown command");
                 continue;
             }
 
-            String commandKey = parts[0] + " " + parts[1];
-            Command command = commands.get(commandKey);
+            commands.get(commandKey).execute(parts);
+        }
 
-            if (command != null) {
-                command.execute(parts);
-            } else {
-                System.out.println("Error, unknown command");
+    }
+
+    private static String extractCommandKey(String[] parts, Map<String, Command> commands) {
+        if (parts.length >= 2) {
+            String twoWord = parts[0] + " " + parts[1];
+            if (commands.containsKey(twoWord)) {
+                return twoWord;
             }
         }
+        if (commands.containsKey(parts[0])) {
+            return parts[0];
+        }
+        return null;
     }
 }

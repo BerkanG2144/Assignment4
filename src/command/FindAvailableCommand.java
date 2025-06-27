@@ -76,4 +76,10 @@ public class FindAvailableCommand implements Command {
             System.out.printf("%05d %d %.2fe%n", room.hotelId(), room.roomNumber(), room.price());
         }
     }
+
+    @Override
+    public String keyword() {
+        return "find available";
+    }
+
 }

@@ -34,4 +34,10 @@ public class RemoveHotelCommand implements Command {
             System.out.println("Error, invalid HotelId");
         }
     }
+
+    @Override
+    public String keyword() {
+        return "remove hotel";
+    }
+
 }

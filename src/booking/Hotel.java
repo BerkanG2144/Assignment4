@@ -27,6 +27,16 @@ public class Hotel {
         return Collections.unmodifiableMap(rooms);
     }
 
+    public Room findRoomWithBooking(int bookingId) {
+        for (Room room : rooms.values()) {
+            if (room.hasBooking(bookingId)) {
+                return room;
+            }
+        }
+        return null;
+    }
+
+
     //Wenn noch kein Zimmer mit dieser Nummer existiert, wird es eingefügt → Rückgabe: null.
     //Wenn schon ein Zimmer mit dieser Nummer da ist, passiert nichts → Rückgabe: das bereits vorhandene Booking.Room-Objekt.
     public boolean addRoom(Room room) {

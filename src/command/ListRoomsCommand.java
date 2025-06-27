@@ -61,4 +61,10 @@ public class ListRoomsCommand implements Command {
                         room.getPrice());
             }
         }
+
+    @Override
+    public String keyword() {
+        return "list rooms";
+    }
+
 }
