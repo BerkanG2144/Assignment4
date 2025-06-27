@@ -3,8 +3,6 @@ package command;
 import booking.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,7 +31,6 @@ public class BookCommand implements Command {
         int roomNumber = Integer.parseInt(args[2]);
         String fromStr = args[3];
         String toStr = args[4];
-        String regex = "\\d{4}-\\d{2}-\\d{2}";
         String firstName = args[5];
         String lastName = args[6];
 
