@@ -34,11 +34,12 @@ public class AddRoomCommand implements Command {
                 return;
             }
 
-            if (hotel.getRooms().containsKey(roomNumber)) {
+            boolean added = hotel.addRoom(new Room(roomNumber, category, price));
+            if (!added) {
                 System.out.println("Error, room already exists");
+                return;
             }
 
-            hotel.addRoom(new Room(roomNumber, category, price));
             System.out.println("OK");
 
         } catch (NumberFormatException e) {
