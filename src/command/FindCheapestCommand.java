@@ -6,7 +6,6 @@ import booking.Hotel;
 import booking.Room;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class FindCheapestCommand implements Command {
     /**
      * Constructs the command with access to the hotel map.
      *
-     * @param hotels the map of hotels indexed by hotel ID
+     * @param hotels the map of hotels indexed by hotel IDR
      */
     public FindCheapestCommand(Map<Integer, Hotel> hotels) {
         this.hotels = hotels;
@@ -53,12 +52,12 @@ public class FindCheapestCommand implements Command {
         }
         LocalDate from = LocalDate.parse(fromStr);
         LocalDate to = LocalDate.parse(toStr);
-        DateRange range = new DateRange(from, to);
-        List<AvailableRoom> result = new ArrayList<>();
         if (!from.isBefore(to)) {
-            System.out.println("Error, invalid date range");
+            System.out.println("Error, start date must be before end date");
             return;
         }
+        DateRange range = new DateRange(from, to);
+        List<AvailableRoom> result = new ArrayList<>();
         for (Hotel hotel : hotels.values()) {
             if (!hotel.getCity().equals(city)) {
                 continue;
@@ -76,7 +75,8 @@ public class FindCheapestCommand implements Command {
         AvailableRoom bestRoom = null;
         double bestTotalPrice = Double.MAX_VALUE;
         for (AvailableRoom room : result) {
-            double totalPrice = room.price() * ChronoUnit.DAYS.between(from, to);
+            int days = (int) (to.toEpochDay() - from.toEpochDay());
+            double totalPrice = room.price() * days;
             if (totalPrice < bestTotalPrice) {
                 bestRoom = room;
                 bestTotalPrice = totalPrice;
@@ -88,7 +88,7 @@ public class FindCheapestCommand implements Command {
             }
         }
         if (bestRoom != null) {
-            System.out.printf("%05d %d %.2fe%n", bestRoom.hotelId(), bestRoom.roomNumber(), bestTotalPrice);
+            System.out.printf("%05d %d %.2f€%n", bestRoom.hotelId(), bestRoom.roomNumber(), bestTotalPrice);
         }
 
     }

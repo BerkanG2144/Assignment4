@@ -1,6 +1,9 @@
 package command;
 
+import booking.Booking;
+import booking.BookingManager;
 import booking.Hotel;
+import booking.Room;
 
 import java.util.Map;
 
@@ -16,14 +19,17 @@ import java.util.Map;
 public class RemoveHotelCommand implements Command {
 
     private final Map<Integer, Hotel> hotels;
+    private final BookingManager bookingManager;
 
     /**
      * Constructs the command with access to the hotel map.
      *
      * @param hotels the map of hotels
+     * @param bookingManager  provide bookings
      */
-    public RemoveHotelCommand(Map<Integer, Hotel> hotels) {
+    public RemoveHotelCommand(Map<Integer, Hotel> hotels, BookingManager bookingManager) {
         this.hotels = hotels;
+        this.bookingManager = bookingManager;
     }
 
     @Override
@@ -35,10 +41,17 @@ public class RemoveHotelCommand implements Command {
 
         try {
             int hotelId = Integer.parseInt(args[2]);
+            Hotel hotel = hotels.get(hotelId);
 
-            if (!hotels.containsKey(hotelId)) {
+            if (hotel == null) {
                 System.out.println("Error, hotel not found");
                 return;
+            }
+
+            for (Room room : hotel.getRooms().values()) {
+                for (Booking booking : room.getBookings()) {
+                    bookingManager.cancelBooking(booking.bookingId());
+                }
             }
 
             hotels.remove(hotelId);

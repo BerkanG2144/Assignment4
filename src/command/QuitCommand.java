@@ -5,7 +5,7 @@ package command;
  *
  * Usage: {@code quit}
  *
- * Invokes a callback to stop the main loop without using System.exit().
+ * Invokes a callback to stop the main loop without calling the JVM directly.
  *
  * @author ujnaa
  */

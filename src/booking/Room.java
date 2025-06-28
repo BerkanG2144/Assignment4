@@ -68,7 +68,8 @@ public class Room {
      */
     public boolean isAvailable(DateRange range) {
         for (Booking booking : bookings) {
-            if (booking.dateRange().overlaps(range)) {
+            if (!(range.to().compareTo(booking.dateRange().from()) <= 0
+                    || range.from().compareTo(booking.dateRange().to()) >= 0)) {
                 return false;
             }
         }
@@ -82,7 +83,21 @@ public class Room {
      * @return true if a matching booking exists, false otherwise
      */
     public boolean hasBooking(int bookingId) {
-        return bookings.stream().anyMatch(b -> b.bookingId() == bookingId);
+        for (Booking booking : bookings) {
+            if (booking.bookingId() == bookingId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns all bookings for this room.
+     *
+     * @return the list of bookings
+     */
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
     /**

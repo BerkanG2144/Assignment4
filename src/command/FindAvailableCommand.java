@@ -4,6 +4,7 @@ import booking.AvailableRoom;
 import booking.DateRange;
 import booking.Hotel;
 import booking.Room;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ public class FindAvailableCommand implements Command {
             System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
             return;
         }
-
         String city = args[2];
         String category = args[3];
         LocalDate from;
@@ -45,15 +45,22 @@ public class FindAvailableCommand implements Command {
         try {
             from = LocalDate.parse(args[4]);
             to = LocalDate.parse(args[5]);
+
+            if (!from.isBefore(to)) {
+                System.out.println("Error, start date must before end date");
+                return;
+            }
+
+            if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
+                System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
+                return;
+            }
+
         } catch (DateTimeParseException e) {
             System.out.println("Error, invalid date format");
             return;
         }
 
-        if (!from.isBefore(to)) {
-            System.out.println("Error, start date must before end date");
-            return;
-        }
 
         DateRange range = new DateRange(from, to);
         List<AvailableRoom> result = new ArrayList<>();
@@ -70,10 +77,19 @@ public class FindAvailableCommand implements Command {
             }
         }
 
-        result.sort(Comparator.comparing(AvailableRoom::hotelId).thenComparing(AvailableRoom::roomNumber));
+        result.sort(new Comparator<AvailableRoom>() {
+            @Override
+            public int compare(AvailableRoom a, AvailableRoom b) {
+                int hotelCmp = Integer.compare(a.hotelId(), b.hotelId());
+                if (hotelCmp != 0) {
+                    return hotelCmp;
+                }
+                return Integer.compare(a.roomNumber(), b.roomNumber());
+            }
+        });
 
         for (AvailableRoom room : result) {
-            System.out.printf("%05d %d %.2fe%n", room.hotelId(), room.roomNumber(), room.price());
+            System.out.printf("%05d %d %.2f€%n", room.hotelId(), room.roomNumber(), room.price());
         }
     }
 

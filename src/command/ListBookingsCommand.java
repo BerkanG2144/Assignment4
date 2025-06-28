@@ -3,6 +3,7 @@ package command;
 import booking.Booking;
 import booking.BookingManager;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 /**
@@ -30,11 +31,23 @@ public class ListBookingsCommand implements Command {
             return;
         }
 
-        List<Booking> bookings = bookingManager.getAllBookings().stream()
-                .sorted(Comparator.comparingInt(Booking::bookingId))
-                .toList();
+        List<Booking> bookings = new ArrayList<>(bookingManager.getAllBookings());
 
-        for (Booking booking : bookings) {
+        List<Booking> filtered = new ArrayList<>();
+        for (Booking b : bookings) {
+            if (!b.isCancelled()) {
+                filtered.add(b);
+            }
+        }
+
+        filtered.sort(new Comparator<Booking>() {
+            @Override
+            public int compare(Booking a, Booking b) {
+                return Integer.compare(a.bookingId(), b.bookingId());
+            }
+        });
+
+        for (Booking booking : filtered) {
             System.out.printf("%d %d %s %s%n",
                     booking.bookingId(),
                     booking.customer().getCustomerId(),
@@ -43,6 +56,7 @@ public class ListBookingsCommand implements Command {
             );
         }
     }
+
 
     @Override
     public String keyword() {

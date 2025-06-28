@@ -45,6 +45,16 @@ public class AddRoomCommand implements Command {
             String category = args[4];
             double price = Double.parseDouble(args[5]);
 
+            if (price <= 0) {
+                System.out.println("Error, price must be greater than 0");
+                return;
+            }
+
+            if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
+                System.out.println("Error, usage: add room <HotelID> <RoomId> <Category> <Price>");
+                return;
+            }
+
             Hotel hotel = hotels.get(hotelId);
             if (hotel == null) {
                 System.out.println("Error, hotel does not exist");

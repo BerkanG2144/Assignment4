@@ -41,6 +41,16 @@ public class AddHotelCommand implements Command {
             int hotelId = Integer.parseInt(args[2]);
             String city = args[3];
 
+            if (hotelId < 1 || hotelId > 99999) {
+                System.out.println("Error, invalid HotelID");
+                return;
+            }
+
+            if (city.contains(" ")) {
+                System.out.println("Error, usage: add hotel <HotelID> <City>");
+                return;
+            }
+
             if (hotels.containsKey(hotelId)) {
                 System.out.println("Error, hotel already exists");
                 return;

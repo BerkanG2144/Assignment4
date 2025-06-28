@@ -1,17 +1,6 @@
 package booking;
 
-import command.AddHotelCommand;
-import command.RemoveHotelCommand;
-import command.AddRoomCommand;
-import command.RemoveRoomCommand;
-import command.ListRoomsCommand;
-import command.FindAvailableCommand;
-import command.FindCheapestCommand;
-import command.BookCommand;
-import command.ListBookingsCommand;
-import command.CancelCommand;
-import command.QuitCommand;
-import command.Command;
+import command.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +32,7 @@ public final class HotelBooking {
 
         List<Command> commandList = List.of(
                 new AddHotelCommand(hotels),
-                new RemoveHotelCommand(hotels),
+                new RemoveHotelCommand(hotels, bookingManager),
                 new AddRoomCommand(hotels),
                 new RemoveRoomCommand(hotels),
                 new ListRoomsCommand(hotels),
@@ -95,5 +84,6 @@ public final class HotelBooking {
             return parts[0];
         }
         return null;
+
     }
 }

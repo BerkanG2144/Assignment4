@@ -12,7 +12,6 @@ import java.util.Map;
  * Command to list all rooms sorted by hotel ID and room number.
  * Each line contains: {@code <HotelID> <RoomNumber> <Category> <Price>}.
  *
- * Example output: {@code 00011 101 Single 11.99e}
  *
  * @author ujnaa
  */
@@ -31,6 +30,11 @@ public class ListRoomsCommand implements Command {
 
     @Override
     public void execute(String[] args) {
+        if (args.length != 2) {
+            System.out.println("Error, invalid input");
+            return;
+        }
+
         List<RoomEntry> entries = new ArrayList<>();
 
         for (Map.Entry<Integer, Hotel> entry : hotels.entrySet()) {
@@ -64,7 +68,7 @@ public class ListRoomsCommand implements Command {
 
         @Override
         public String toString() {
-            return String.format("%05d %d %s %.2fe",
+            return String.format("%05d %d %s %.2f€",
                     hotelId,
                     room.getNumber(),
                     room.getCategory(),

@@ -3,7 +3,6 @@ package booking;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Manages all bookings in the system.
@@ -16,14 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BookingManager {
 
     private final Map<Integer, Booking> bookings = new HashMap<>();
-    private final AtomicInteger bookingIdGenerator;
+    private int bookingIdGenerator = 1;
 
-    /**
-     * Constructs a new BookingManager with an initial booking ID of 1.
-     */
-    public BookingManager() {
-        this.bookingIdGenerator = new AtomicInteger(1);
-    }
 
     /**
      * Creates a new booking for the given customer and date range.
@@ -34,7 +27,7 @@ public class BookingManager {
      * @throws NullPointerException if customer or range is null
      */
     public Booking createBooking(Customer customer, DateRange range) {
-        int bookingId = bookingIdGenerator.getAndIncrement();
+        int bookingId = bookingIdGenerator++;
         Booking booking = new Booking(bookingId, customer, range);
         bookings.put(bookingId, booking);
         return booking;
