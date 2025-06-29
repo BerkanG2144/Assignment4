@@ -4,6 +4,7 @@ import booking.AvailableRoom;
 import booking.DateRange;
 import booking.Hotel;
 import booking.Room;
+import booking.Constants;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -34,7 +35,7 @@ public class FindAvailableCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 6) {
-            System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
+            System.out.println(Constants.ERROR_FIND_AVAILABLE_USAGE);
             return;
         }
         String city = args[2];
@@ -52,12 +53,12 @@ public class FindAvailableCommand implements Command {
             }
 
             if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
-                System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
+                System.out.println(Constants.ERROR_FIND_AVAILABLE_USAGE);
                 return;
             }
 
         } catch (DateTimeParseException e) {
-            System.out.println("Error, invalid date format");
+            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
             return;
         }
 

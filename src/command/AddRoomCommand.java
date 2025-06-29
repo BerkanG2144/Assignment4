@@ -2,6 +2,7 @@ package command;
 
 import booking.Hotel;
 import booking.Room;
+import booking.Constants;
 
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class AddRoomCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 6) {
-            System.out.println("Error, usage: add room <HotelID> <RoomId> <Category> <Price>");
+            System.out.println(Constants.ERROR_ADD_ROOM_USAGE);
             return;
         }
 
@@ -51,13 +52,13 @@ public class AddRoomCommand implements Command {
             }
 
             if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
-                System.out.println("Error, usage: add room <HotelID> <RoomId> <Category> <Price>");
+                System.out.println(Constants.ERROR_ADD_ROOM_USAGE);
                 return;
             }
 
             Hotel hotel = hotels.get(hotelId);
             if (hotel == null) {
-                System.out.println("Error, hotel does not exist");
+                System.out.println(Constants.ERROR_HOTEL_DOES_NOT_EXIST);
                 return;
             }
 
@@ -70,7 +71,7 @@ public class AddRoomCommand implements Command {
             System.out.println("OK");
 
         } catch (NumberFormatException e) {
-            System.out.println("Error, number format");
+            System.out.println(Constants.ERROR_INVALID_NUMBER_FORMAT);
         }
     }
 

@@ -4,6 +4,7 @@ import booking.Booking;
 import booking.BookingManager;
 import booking.Hotel;
 import booking.Room;
+import booking.Constants;
 
 import java.util.Map;
 

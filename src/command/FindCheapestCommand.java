@@ -4,6 +4,7 @@ import booking.AvailableRoom;
 import booking.DateRange;
 import booking.Hotel;
 import booking.Room;
+import booking.Constants;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class FindCheapestCommand implements Command {
             return;
         }
         if (!fromStr.matches(regex) || !toStr.matches(regex)) {
-            System.out.println("Error, invalid date format");
+            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
             return;
         }
         LocalDate from = LocalDate.parse(fromStr);

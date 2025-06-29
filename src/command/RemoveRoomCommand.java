@@ -1,6 +1,7 @@
 package command;
 
 import booking.Hotel;
+import booking.Constants;
 
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class RemoveRoomCommand implements Command {
 
             Hotel hotel = hotels.get(hotelId);
             if (hotel == null) {
-                System.out.println("Error, hotel does not exist");
+                System.out.println(Constants.ERROR_HOTEL_DOES_NOT_EXIST);
                 return;
             }
 
@@ -51,7 +52,7 @@ public class RemoveRoomCommand implements Command {
             hotel.removeRoom(roomNumber);
             System.out.println("OK");
         } catch (NumberFormatException e) {
-            System.out.println("Error, invalid HotelId");
+            System.out.println(Constants.ERROR_INVALID_HOTEL_ID);
         }
     }
 

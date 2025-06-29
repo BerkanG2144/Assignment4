@@ -2,6 +2,7 @@ package command;
 
 
 import booking.*;
+import booking.Constants;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class BookCommand implements Command {
 
             Hotel hotel = hotels.get(hotelId);
             if (hotel == null) {
-                System.out.println("Error, hotel not found");
+                System.out.println(Constants.ERROR_HOTEL_NOT_FOUND);
                 return;
             }
 
@@ -92,9 +93,9 @@ public class BookCommand implements Command {
             System.out.println(booking.bookingId() + " " + customerId);
 
         } catch (NumberFormatException e) {
-            System.out.println("Error, invalid number format");
+            System.out.println(Constants.ERROR_INVALID_NUMBER_FORMAT);
         } catch (java.time.format.DateTimeParseException e) {
-            System.out.println("Error, invalid date format");
+            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
         }
     }
 
