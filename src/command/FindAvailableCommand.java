@@ -1,11 +1,6 @@
 package command;
 
-import booking.AvailableRoom;
-import booking.Constants;
-import booking.DateRange;
-import booking.Hotel;
-import booking.Room;
-import booking.RoomCategory;
+import booking.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

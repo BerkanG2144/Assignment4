@@ -2,10 +2,16 @@ package booking;
 
 /**
  * Enumeration of valid room categories.
+ * @author ujnaa
  */
 public enum RoomCategory {
+    /** Single room category. */
     SINGLE("Single"),
+
+    /** Double room category. */
     DOUBLE("Double"),
+
+    /** Suite room category. */
     SUITE("Suite");
 
     private final String label;

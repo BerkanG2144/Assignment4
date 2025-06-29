@@ -1,7 +1,7 @@
 package command;
 
-import booking.Hotel;
 import booking.Constants;
+import booking.Hotel;
 
 import java.util.Map;
 

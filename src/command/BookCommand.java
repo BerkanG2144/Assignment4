@@ -1,8 +1,6 @@
 package command;
 
-
 import booking.*;
-import booking.Constants;
 
 import java.time.LocalDate;
 import java.util.Map;

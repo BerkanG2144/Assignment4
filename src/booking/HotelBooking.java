@@ -1,7 +1,6 @@
 package booking;
 
 import command.*;
-import booking.Constants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,12 +54,12 @@ public final class HotelBooking {
                 String input = scanner.nextLine().trim();
                 String[] parts = input.split("\\s+");
 
-            String commandKey = extractCommandKey(parts, commands);
+                String commandKey = extractCommandKey(parts, commands);
 
-            if (commandKey == null) {
-                System.out.println(Constants.ERROR_UNKNOWN_COMMAND);
-                continue;
-            }
+                if (commandKey == null) {
+                    System.out.println("Error, unknown command");
+                    continue;
+                }
 
                 commands.get(commandKey).execute(parts);
             }

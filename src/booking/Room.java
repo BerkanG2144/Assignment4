@@ -3,8 +3,6 @@ package booking;
 import java.util.ArrayList;
 import java.util.List;
 
-import booking.RoomCategory;
-
 /**
  * Represents a room in a hotel.
  *

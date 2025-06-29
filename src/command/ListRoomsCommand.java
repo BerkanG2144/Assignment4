@@ -1,8 +1,8 @@
 package command;
 
+import booking.Constants;
 import booking.Hotel;
 import booking.Room;
-import booking.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
