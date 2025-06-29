@@ -5,6 +5,7 @@ import booking.Constants;
 import booking.DateRange;
 import booking.Hotel;
 import booking.Room;
+import booking.RoomCategory;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -39,7 +40,7 @@ public class FindAvailableCommand implements Command {
             return;
         }
         String city = args[2];
-        String category = args[3];
+        RoomCategory category = RoomCategory.fromString(args[3]);
         LocalDate from;
         LocalDate to;
 
@@ -52,7 +53,7 @@ public class FindAvailableCommand implements Command {
                 return;
             }
 
-            if (!Constants.VALID_CATEGORIES.contains(category)) {
+            if (category == null) {
                 System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
                 return;
             }
@@ -72,7 +73,7 @@ public class FindAvailableCommand implements Command {
             }
 
             for (Room room : hotel.getRooms().values()) {
-                if (room.getCategory().equals(category) && room.isAvailable(range)) {
+                if (room.getCategory() == category && room.isAvailable(range)) {
                     result.add(new AvailableRoom(hotel.getId(), room.getNumber(), room.getPrice()));
                 }
             }

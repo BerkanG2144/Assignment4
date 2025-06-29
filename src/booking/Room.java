@@ -3,6 +3,8 @@ package booking;
 import java.util.ArrayList;
 import java.util.List;
 
+import booking.RoomCategory;
+
 /**
  * Represents a room in a hotel.
  *
@@ -14,7 +16,7 @@ import java.util.List;
 public class Room {
 
     private final int number;
-    private final String category;
+    private final RoomCategory category;
     private final double price;
     private final List<Booking> bookings;
 
@@ -22,10 +24,10 @@ public class Room {
      * Constructs a new Room with the specified number, category, and price.
      *
      * @param number the room number (unique within a hotel)
-     * @param category the room category (e.g., "Single", "Double", "Suite")
+     * @param category the room category
      * @param price the price per night
      */
-    public Room(int number, String category, double price) {
+    public Room(int number, RoomCategory category, double price) {
         this.number = number;
         this.category = category;
         this.price = price;
@@ -46,7 +48,7 @@ public class Room {
      *
      * @return the room category
      */
-    public String getCategory() {
+    public RoomCategory getCategory() {
         return category;
     }
 
