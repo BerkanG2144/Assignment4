@@ -3,7 +3,6 @@ package booking;
 import java.util.HashMap;
 import java.util.Map;
 
-import booking.Constants;
 
 /**
  * Manages customer records and assigns unique customer IDs.

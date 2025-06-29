@@ -2,7 +2,6 @@ package booking;
 
 import java.time.LocalDate;
 
-import booking.Constants;
 
 /**
  * Represents a date range from a start date (inclusive) to an end date (exclusive).
