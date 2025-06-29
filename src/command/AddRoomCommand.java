@@ -2,6 +2,7 @@ package command;
 
 import booking.Hotel;
 import booking.Room;
+import booking.RoomCategory;
 import booking.Constants;
 
 import java.util.Map;
@@ -43,7 +44,7 @@ public class AddRoomCommand implements Command {
         try {
             int hotelId = Integer.parseInt(args[2]);
             int roomNumber = Integer.parseInt(args[3]);
-            String category = args[4];
+            RoomCategory category = RoomCategory.fromString(args[4]);
             double price = Double.parseDouble(args[5]);
 
             if (price <= 0) {
@@ -51,7 +52,7 @@ public class AddRoomCommand implements Command {
                 return;
             }
 
-            if (!Constants.VALID_CATEGORIES.contains(category)) {
+            if (category == null) {
                 System.out.println(Constants.ERROR_USAGE_ADD_ROOM);
                 return;
             }

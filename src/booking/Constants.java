@@ -2,6 +2,8 @@ package booking;
 
 import java.util.List;
 
+import booking.RoomCategory;
+
 /**
  * Application wide constants used by several commands.
  */
@@ -14,7 +16,8 @@ public final class Constants {
     public static final int MAX_HOTEL_ID = 99999;
 
     /** Valid room categories. */
-    public static final List<String> VALID_CATEGORIES = List.of("Single", "Double", "Suite");
+    public static final List<RoomCategory> VALID_CATEGORIES =
+            List.of(RoomCategory.SINGLE, RoomCategory.DOUBLE, RoomCategory.SUITE);
 
     // Common error messages
     public static final String ERROR_USAGE_ADD_HOTEL = "Error, usage: add hotel <HotelID> <City>";
