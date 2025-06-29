@@ -36,7 +36,7 @@ public class FindCheapestCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 6) {
-            System.out.println("Error, find cheapest <Stadt> <Kategorie> <Startdatum> <Enddatum>");
+            System.out.println(Constants.ERROR_USAGE_FIND_CHEAPEST);
             return;
         }
         String city = args[2];
@@ -97,7 +97,7 @@ public class FindCheapestCommand implements Command {
 
     @Override
     public String keyword() {
-        return "find cheapest";
+        return Constants.COMMAND_FIND_CHEAPEST;
     }
 
 

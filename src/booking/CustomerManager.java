@@ -3,6 +3,8 @@ package booking;
 import java.util.HashMap;
 import java.util.Map;
 
+import booking.Constants;
+
 /**
  * Manages customer records and assigns unique customer IDs.
  *
@@ -14,7 +16,7 @@ import java.util.Map;
 public class CustomerManager {
 
     private final Map<Customer, Customer> customers = new HashMap<>();
-    private int nextId = 1;
+    private int nextId = Constants.INITIAL_CUSTOMER_ID;
 
     /**
      * Returns the existing customer ID if the customer already exists,
@@ -25,7 +27,7 @@ public class CustomerManager {
      * @return the unique customer ID
      */
     public int getOrAddCustomerId(String firstName, String lastName) {
-        Customer key = new Customer(0, firstName, lastName); // temporary key
+        Customer key = new Customer(Constants.ID_NONE, firstName, lastName); // temporary key
         if (customers.containsKey(key)) {
             return customers.get(key).getCustomerId();
         } else {
@@ -45,7 +47,7 @@ public class CustomerManager {
      * @return the Customer object or null
      */
     public Customer getCustomer(String firstName, String lastName) {
-        Customer key = new Customer(0, firstName, lastName);
+        Customer key = new Customer(Constants.ID_NONE, firstName, lastName);
         return customers.getOrDefault(key, null);
     }
 }

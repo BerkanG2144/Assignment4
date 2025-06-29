@@ -79,6 +79,6 @@ public class ListRoomsCommand implements Command {
 
     @Override
     public String keyword() {
-        return "list rooms";
+        return Constants.COMMAND_LIST_ROOMS;
     }
 }

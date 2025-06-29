@@ -69,7 +69,7 @@ public class AddRoomCommand implements Command {
             }
 
             hotel.addRoom(new Room(roomNumber, category, price));
-            System.out.println("OK");
+            System.out.println(Constants.MESSAGE_OK);
 
         } catch (NumberFormatException e) {
             System.out.println(Constants.ERROR_NUMBER_FORMAT);
@@ -83,6 +83,6 @@ public class AddRoomCommand implements Command {
      */
     @Override
     public String keyword() {
-        return "add room";
+        return Constants.COMMAND_ADD_ROOM;
     }
 }

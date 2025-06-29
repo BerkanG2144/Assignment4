@@ -36,7 +36,7 @@ public class FindAvailableCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 6) {
-            System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
+            System.out.println(Constants.ERROR_USAGE_FIND_AVAILABLE);
             return;
         }
         String city = args[2];
@@ -54,7 +54,7 @@ public class FindAvailableCommand implements Command {
             }
 
             if (category == null) {
-                System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
+                System.out.println(Constants.ERROR_USAGE_FIND_AVAILABLE);
                 return;
             }
 
@@ -97,7 +97,7 @@ public class FindAvailableCommand implements Command {
 
     @Override
     public String keyword() {
-        return "find available";
+        return Constants.COMMAND_FIND_AVAILABLE;
     }
 
 }

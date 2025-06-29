@@ -12,6 +12,7 @@ import command.QuitCommand;
 import command.RemoveRoomCommand;
 import command.RemoveHotelCommand;
 import command.Command;
+import booking.Constants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +69,7 @@ public final class HotelBooking {
                 String commandKey = extractCommandKey(parts, commands);
 
                 if (commandKey == null) {
-                    System.out.println("Error, unknown command");
+                    System.out.println(Constants.ERROR_UNKNOWN_COMMAND);
                     continue;
                 }
 

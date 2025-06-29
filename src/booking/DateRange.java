@@ -2,6 +2,8 @@ package booking;
 
 import java.time.LocalDate;
 
+import booking.Constants;
+
 /**
  * Represents a date range from a start date (inclusive) to an end date (exclusive).
  * A date range is considered valid only if the start date is strictly before the end date.
@@ -23,7 +25,7 @@ public record DateRange(LocalDate from, LocalDate to) {
      */
     public DateRange {
         if (from == null || to == null || !from.isBefore(to)) {
-            throw new IllegalArgumentException("Invalid date range: from must be before to.");
+            throw new IllegalArgumentException(Constants.MESSAGE_INVALID_DATE_RANGE);
         }
     }
 

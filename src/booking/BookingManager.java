@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import booking.Constants;
+
 /**
  * Manages all bookings in the system.
  *
@@ -15,7 +17,7 @@ import java.util.Map;
 public class BookingManager {
 
     private final Map<Integer, Booking> bookings = new HashMap<>();
-    private int bookingIdGenerator = 1;
+    private int bookingIdGenerator = Constants.INITIAL_BOOKING_ID;
 
 
     /**
