@@ -1,6 +1,7 @@
 package command;
 
 import booking.AvailableRoom;
+import booking.Constants;
 import booking.DateRange;
 import booking.Hotel;
 import booking.Room;
@@ -47,17 +48,17 @@ public class FindAvailableCommand implements Command {
             to = LocalDate.parse(args[5]);
 
             if (!from.isBefore(to)) {
-                System.out.println("Error, start date must before end date");
+                System.out.println(Constants.ERROR_START_DATE_BEFORE_END);
                 return;
             }
 
-            if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
+            if (!Constants.VALID_CATEGORIES.contains(category)) {
                 System.out.println("Error, find available < Stadt > < Kategorie > < Datum > < Datum >");
                 return;
             }
 
         } catch (DateTimeParseException e) {
-            System.out.println("Error, invalid date format");
+            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
             return;
         }
 

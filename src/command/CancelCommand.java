@@ -2,6 +2,7 @@ package command;
 
 import booking.Booking;
 import booking.BookingManager;
+import booking.Constants;
 import booking.Hotel;
 import booking.Room;
 
@@ -41,7 +42,7 @@ public class CancelCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 3) {
-            System.out.println("Error, invalid cancel format");
+            System.out.println(Constants.ERROR_INVALID_CANCEL_FORMAT);
             return;
         }
 
@@ -51,12 +52,12 @@ public class CancelCommand implements Command {
 
             Booking booking = bookingManager.getBookingById(bookingId);
             if (booking == null || booking.isCancelled()) {
-                System.out.println("Error, booking not found");
+                System.out.println(Constants.ERROR_BOOKING_NOT_FOUND);
                 return;
             }
 
             if (booking.customer().getCustomerId() != customerId) {
-                System.out.println("Error, customer mismatch");
+                System.out.println(Constants.ERROR_CUSTOMER_MISMATCH);
                 return;
             }
 
@@ -72,7 +73,7 @@ public class CancelCommand implements Command {
             System.out.println("OK");
 
         } catch (NumberFormatException e) {
-            System.out.println("Error, invalid numbers");
+            System.out.println(Constants.ERROR_INVALID_NUMBERS);
         }
     }
 

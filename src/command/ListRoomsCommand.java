@@ -2,6 +2,7 @@ package command;
 
 import booking.Hotel;
 import booking.Room;
+import booking.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class ListRoomsCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 2) {
-            System.out.println("Error, invalid input");
+            System.out.println(Constants.ERROR_INVALID_INPUT);
             return;
         }
 

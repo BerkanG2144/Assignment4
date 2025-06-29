@@ -2,6 +2,7 @@ package command;
 
 import booking.Booking;
 import booking.BookingManager;
+import booking.Constants;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,7 +28,7 @@ public class ListBookingsCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 2) {
-            System.out.println("Error, invalid list bookings command");
+            System.out.println(Constants.ERROR_INVALID_LIST_BOOKINGS_COMMAND);
             return;
         }
 
