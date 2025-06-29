@@ -1,5 +1,7 @@
 package command;
 
+import booking.Constants;
+
 /**
  * Command to quit the booking system.
  *
@@ -25,7 +27,7 @@ public class QuitCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 1) {
-            System.out.println("Error, invalid quit command");
+            System.out.println(Constants.ERROR_INVALID_QUIT_COMMAND);
             return;
         }
         quitCallback.run(); // Beendet die Schleife in main

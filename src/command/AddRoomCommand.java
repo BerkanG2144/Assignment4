@@ -2,6 +2,7 @@ package command;
 
 import booking.Hotel;
 import booking.Room;
+import booking.Constants;
 
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class AddRoomCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 6) {
-            System.out.println("Error, usage: add room <HotelID> <RoomId> <Category> <Price>");
+            System.out.println(Constants.ERROR_USAGE_ADD_ROOM);
             return;
         }
 
@@ -46,23 +47,23 @@ public class AddRoomCommand implements Command {
             double price = Double.parseDouble(args[5]);
 
             if (price <= 0) {
-                System.out.println("Error, price must be greater than 0");
+                System.out.println(Constants.ERROR_PRICE_GREATER_ZERO);
                 return;
             }
 
-            if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
-                System.out.println("Error, usage: add room <HotelID> <RoomId> <Category> <Price>");
+            if (!Constants.VALID_CATEGORIES.contains(category)) {
+                System.out.println(Constants.ERROR_USAGE_ADD_ROOM);
                 return;
             }
 
             Hotel hotel = hotels.get(hotelId);
             if (hotel == null) {
-                System.out.println("Error, hotel does not exist");
+                System.out.println(Constants.ERROR_HOTEL_DOES_NOT_EXIST);
                 return;
             }
 
             if (hotel.getRooms().containsKey(roomNumber)) {
-                System.out.println("Error, room already exists");
+                System.out.println(Constants.ERROR_ROOM_ALREADY_EXISTS);
                 return;
             }
 
@@ -70,7 +71,7 @@ public class AddRoomCommand implements Command {
             System.out.println("OK");
 
         } catch (NumberFormatException e) {
-            System.out.println("Error, number format");
+            System.out.println(Constants.ERROR_NUMBER_FORMAT);
         }
     }
 

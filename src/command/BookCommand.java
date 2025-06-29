@@ -2,6 +2,7 @@ package command;
 
 
 import booking.*;
+import booking.Constants;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class BookCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 7) {
-            System.out.println("Error, invalid format");
+            System.out.println(Constants.ERROR_INVALID_FORMAT);
             return;
         }
 
@@ -60,26 +61,26 @@ public class BookCommand implements Command {
             LocalDate to = LocalDate.parse(toStr);
 
             if (!from.isBefore(to)) {
-                System.out.println("Error, invalid date range");
+                System.out.println(Constants.ERROR_INVALID_DATE_RANGE);
                 return;
             }
 
             Hotel hotel = hotels.get(hotelId);
             if (hotel == null) {
-                System.out.println("Error, hotel not found");
+                System.out.println(Constants.ERROR_HOTEL_NOT_FOUND);
                 return;
             }
 
             Room room = hotel.getRooms().get(roomNumber);
             if (room == null) {
-                System.out.println("Error, room not found");
+                System.out.println(Constants.ERROR_ROOM_NOT_FOUND);
                 return;
             }
 
             DateRange range = new DateRange(from, to);
 
             if (!room.isAvailable(range)) {
-                System.out.println("Error, room not available");
+                System.out.println(Constants.ERROR_ROOM_NOT_AVAILABLE);
                 return;
             }
 
@@ -92,9 +93,9 @@ public class BookCommand implements Command {
             System.out.println(booking.bookingId() + " " + customerId);
 
         } catch (NumberFormatException e) {
-            System.out.println("Error, invalid number format");
+            System.out.println(Constants.ERROR_INVALID_NUMBER_FORMAT);
         } catch (java.time.format.DateTimeParseException e) {
-            System.out.println("Error, invalid date format");
+            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
         }
     }
 

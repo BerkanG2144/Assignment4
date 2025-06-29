@@ -1,6 +1,7 @@
 package command;
 
 import booking.AvailableRoom;
+import booking.Constants;
 import booking.DateRange;
 import booking.Hotel;
 import booking.Room;
@@ -42,18 +43,18 @@ public class FindCheapestCommand implements Command {
         String fromStr = args[4];
         String toStr = args[5];
         String regex = "\\d{4}-\\d{2}-\\d{2}";
-        if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
-            System.out.println("Error, unknown category");
+        if (!Constants.VALID_CATEGORIES.contains(category)) {
+            System.out.println(Constants.ERROR_UNKNOWN_CATEGORY);
             return;
         }
         if (!fromStr.matches(regex) || !toStr.matches(regex)) {
-            System.out.println("Error, invalid date format");
+            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
             return;
         }
         LocalDate from = LocalDate.parse(fromStr);
         LocalDate to = LocalDate.parse(toStr);
         if (!from.isBefore(to)) {
-            System.out.println("Error, start date must be before end date");
+            System.out.println(Constants.ERROR_START_DATE_BEFORE_END);
             return;
         }
         DateRange range = new DateRange(from, to);

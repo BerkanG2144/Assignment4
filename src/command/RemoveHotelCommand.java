@@ -2,6 +2,7 @@ package command;
 
 import booking.Booking;
 import booking.BookingManager;
+import booking.Constants;
 import booking.Hotel;
 import booking.Room;
 
@@ -44,7 +45,7 @@ public class RemoveHotelCommand implements Command {
             Hotel hotel = hotels.get(hotelId);
 
             if (hotel == null) {
-                System.out.println("Error, hotel not found");
+                System.out.println(Constants.ERROR_HOTEL_NOT_FOUND);
                 return;
             }
 
@@ -57,7 +58,7 @@ public class RemoveHotelCommand implements Command {
             hotels.remove(hotelId);
             System.out.println("OK");
         } catch (NumberFormatException e) {
-            System.out.println("Error, invalid HotelId");
+            System.out.println(Constants.ERROR_INVALID_HOTEL_ID);
         }
     }
 

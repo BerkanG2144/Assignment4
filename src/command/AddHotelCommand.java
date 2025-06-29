@@ -1,6 +1,7 @@
 package command;
 
 import booking.Hotel;
+import booking.Constants;
 
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class AddHotelCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 4) {
-            System.out.println("Error, usage: add hotel <HotelID> <City>");
+            System.out.println(Constants.ERROR_USAGE_ADD_HOTEL);
             return;
         }
 
@@ -41,18 +42,18 @@ public class AddHotelCommand implements Command {
             int hotelId = Integer.parseInt(args[2]);
             String city = args[3];
 
-            if (hotelId < 1 || hotelId > 99999) {
-                System.out.println("Error, invalid HotelID");
+            if (hotelId < 1 || hotelId > Constants.MAX_HOTEL_ID) {
+                System.out.println(Constants.ERROR_INVALID_HOTEL_ID);
                 return;
             }
 
             if (city.contains(" ")) {
-                System.out.println("Error, usage: add hotel <HotelID> <City>");
+                System.out.println(Constants.ERROR_USAGE_ADD_HOTEL);
                 return;
             }
 
             if (hotels.containsKey(hotelId)) {
-                System.out.println("Error, hotel already exists");
+                System.out.println(Constants.ERROR_HOTEL_EXISTS);
                 return;
             }
 
@@ -60,7 +61,7 @@ public class AddHotelCommand implements Command {
             hotels.put(hotelId, newHotel);
             System.out.println("OK");
         } catch (NumberFormatException e) {
-            System.out.println("Error, invalid number format");
+            System.out.println(Constants.ERROR_INVALID_NUMBER_FORMAT);
         }
     }
 
