@@ -12,7 +12,6 @@ import command.QuitCommand;
 import command.RemoveRoomCommand;
 import command.RemoveHotelCommand;
 import command.Command;
-import booking.Constants;
 
 import java.util.HashMap;
 import java.util.List;
