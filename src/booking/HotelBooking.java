@@ -1,6 +1,17 @@
 package booking;
 
-import command.*;
+import command.AddRoomCommand;
+import command.AddHotelCommand;
+import command.BookCommand;
+import command.CancelCommand;
+import command.FindCheapestCommand;
+import command.FindAvailableCommand;
+import command.ListRoomsCommand;
+import command.ListBookingsCommand;
+import command.QuitCommand;
+import command.RemoveRoomCommand;
+import command.RemoveHotelCommand;
+import command.Command;
 
 import java.util.HashMap;
 import java.util.List;

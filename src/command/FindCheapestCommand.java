@@ -1,6 +1,11 @@
 package command;
 
-import booking.*;
+import booking.Hotel;
+import booking.Constants;
+import booking.Room;
+import booking.DateRange;
+import booking.RoomCategory;
+import booking.AvailableRoom;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

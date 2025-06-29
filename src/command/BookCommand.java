@@ -1,7 +1,13 @@
 package command;
 
-import booking.*;
-
+import booking.BookingManager;
+import booking.CustomerManager;
+import booking.Hotel;
+import booking.Constants;
+import booking.Room;
+import booking.DateRange;
+import booking.Customer;
+import booking.Booking;
 import java.time.LocalDate;
 import java.util.Map;
 

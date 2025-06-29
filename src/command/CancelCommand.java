@@ -1,6 +1,10 @@
 package command;
 
-import booking.*;
+import booking.BookingManager;
+import booking.Hotel;
+import booking.Constants;
+import booking.Room;
+import booking.Booking;
 
 import java.util.Map;
 
