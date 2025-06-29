@@ -71,7 +71,7 @@ public class ListRoomsCommand implements Command {
             return String.format("%05d %d %s %.2f€",
                     hotelId,
                     room.getNumber(),
-                    room.getCategory(),
+                    room.getCategory().name(),
                     room.getPrice());
         }
     }

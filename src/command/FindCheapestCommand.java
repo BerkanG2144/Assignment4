@@ -4,6 +4,7 @@ import booking.AvailableRoom;
 import booking.DateRange;
 import booking.Hotel;
 import booking.Room;
+import booking.RoomCategory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,11 +39,13 @@ public class FindCheapestCommand implements Command {
             return;
         }
         String city = args[2];
-        String category = args[3];
+        RoomCategory category;
         String fromStr = args[4];
         String toStr = args[5];
         String regex = "\\d{4}-\\d{2}-\\d{2}";
-        if (!category.equals("Single") && !category.equals("Double") && !category.equals("Suite")) {
+        try {
+            category = RoomCategory.fromString(args[3]);
+        } catch (IllegalArgumentException e) {
             System.out.println("Error, unknown category");
             return;
         }
@@ -63,7 +66,7 @@ public class FindCheapestCommand implements Command {
                 continue;
             }
             for (Room room : hotel.getRooms().values()) {
-                if (!room.getCategory().equals(category)) {
+                if (room.getCategory() != category) {
                     continue;
                 }
                 if (!room.isAvailable(range)) {
