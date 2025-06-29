@@ -35,6 +35,6 @@ public class QuitCommand implements Command {
 
     @Override
     public String keyword() {
-        return "quit";
+        return Constants.COMMAND_QUIT;
     }
 }

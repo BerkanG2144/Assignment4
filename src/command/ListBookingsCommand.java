@@ -61,7 +61,7 @@ public class ListBookingsCommand implements Command {
 
     @Override
     public String keyword() {
-        return "list bookings";
+        return Constants.COMMAND_LIST_BOOKINGS;
     }
 
 }

@@ -59,7 +59,7 @@ public class AddHotelCommand implements Command {
 
             Hotel newHotel = new Hotel(hotelId, city);
             hotels.put(hotelId, newHotel);
-            System.out.println("OK");
+            System.out.println(Constants.MESSAGE_OK);
         } catch (NumberFormatException e) {
             System.out.println(Constants.ERROR_INVALID_NUMBER_FORMAT);
         }
@@ -72,6 +72,6 @@ public class AddHotelCommand implements Command {
      */
     @Override
     public String keyword() {
-        return "add hotel";
+        return Constants.COMMAND_ADD_HOTEL;
     }
 }

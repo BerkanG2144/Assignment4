@@ -30,7 +30,7 @@ public class RemoveRoomCommand implements Command {
     @Override
     public void execute(String[] args) {
         if (args.length != 4) {
-            System.out.println("Error, usage: remove room <HotelID> <RoomId>");
+            System.out.println(Constants.ERROR_USAGE_REMOVE_ROOM);
             return;
         }
 
@@ -50,7 +50,7 @@ public class RemoveRoomCommand implements Command {
             }
 
             hotel.removeRoom(roomNumber);
-            System.out.println("OK");
+            System.out.println(Constants.MESSAGE_OK);
         } catch (NumberFormatException e) {
             System.out.println(Constants.ERROR_INVALID_HOTEL_ID);
         }
@@ -58,7 +58,7 @@ public class RemoveRoomCommand implements Command {
 
     @Override
     public String keyword() {
-        return "remove room";
+        return Constants.COMMAND_REMOVE_ROOM;
     }
 
 }

@@ -111,6 +111,6 @@ public class BookCommand implements Command {
          */
     @Override
     public String keyword() {
-        return "book";
+        return Constants.COMMAND_BOOK;
     }
 }

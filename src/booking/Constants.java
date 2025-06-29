@@ -90,6 +90,66 @@ public final class Constants {
     /** Error when start date is not before end date. */
     public static final String ERROR_START_DATE_BEFORE_END = "Error, start date must be before end date";
 
+    /** Success message for commands that complete without issues. */
+    public static final String MESSAGE_OK = "OK";
+
+    /** Error when find available command format is incorrect. */
+    public static final String ERROR_USAGE_FIND_AVAILABLE = "Error, find available < Stadt > < Kategorie > < Datum > < Datum >";
+
+    /** Error when find cheapest command format is incorrect. */
+    public static final String ERROR_USAGE_FIND_CHEAPEST = "Error, find cheapest <Stadt> <Kategorie> <Startdatum> <Enddatum>";
+
+    /** Error when remove hotel command format is incorrect. */
+    public static final String ERROR_USAGE_REMOVE_HOTEL = "Error, usage: remove hotel <HotelID>";
+
+    /** Error when remove room command format is incorrect. */
+    public static final String ERROR_USAGE_REMOVE_ROOM = "Error, usage: remove room <HotelID> <RoomId>";
+
+    /** Keyword used for the add hotel command. */
+    public static final String COMMAND_ADD_HOTEL = "add hotel";
+
+    /** Keyword used for the remove hotel command. */
+    public static final String COMMAND_REMOVE_HOTEL = "remove hotel";
+
+    /** Keyword used for the add room command. */
+    public static final String COMMAND_ADD_ROOM = "add room";
+
+    /** Keyword used for the remove room command. */
+    public static final String COMMAND_REMOVE_ROOM = "remove room";
+
+    /** Keyword used for the book command. */
+    public static final String COMMAND_BOOK = "book";
+
+    /** Keyword used for the cancel command. */
+    public static final String COMMAND_CANCEL = "cancel";
+
+    /** Keyword used for the find available command. */
+    public static final String COMMAND_FIND_AVAILABLE = "find available";
+
+    /** Keyword used for the find cheapest command. */
+    public static final String COMMAND_FIND_CHEAPEST = "find cheapest";
+
+    /** Keyword used for the list bookings command. */
+    public static final String COMMAND_LIST_BOOKINGS = "list bookings";
+
+    /** Keyword used for the list rooms command. */
+    public static final String COMMAND_LIST_ROOMS = "list rooms";
+
+    /** Keyword used for the quit command. */
+    public static final String COMMAND_QUIT = "quit";
+
+    /** Initial value for booking ID generation. */
+    public static final int INITIAL_BOOKING_ID = 1;
+
+    /** Initial value for customer ID generation. */
+    public static final int INITIAL_CUSTOMER_ID = 1;
+
+    /** Placeholder ID representing no customer. */
+    public static final int ID_NONE = 0;
+
+    /** Detailed message when a date range is invalid. */
+    public static final String MESSAGE_INVALID_DATE_RANGE = "Invalid date range: from must be before to.";
+
     /**
      * Private constructor to prevent instantiation.
      */

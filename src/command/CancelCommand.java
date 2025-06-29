@@ -70,7 +70,7 @@ public class CancelCommand implements Command {
             }
 
             bookingManager.cancelBooking(bookingId);
-            System.out.println("OK");
+            System.out.println(Constants.MESSAGE_OK);
 
         } catch (NumberFormatException e) {
             System.out.println(Constants.ERROR_INVALID_NUMBERS);
@@ -84,6 +84,6 @@ public class CancelCommand implements Command {
      */
     @Override
     public String keyword() {
-        return "cancel";
+        return Constants.COMMAND_CANCEL;
     }
 }
