@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class CustomerManager {
 
-    private final Map<Customer, Integer> customers = new HashMap<>();
+    private final Map<Customer, Customer> customers = new HashMap<>();
     private int nextId = 1;
 
     /**
@@ -25,12 +25,13 @@ public class CustomerManager {
      * @return the unique customer ID
      */
     public int getOrAddCustomerId(String firstName, String lastName) {
-        Customer customer = new Customer(0, firstName, lastName); // temporary ID
-        if (customers.containsKey(customer)) {
-            return customers.get(customer);
+        Customer key = new Customer(0, firstName, lastName); // temporary key
+        if (customers.containsKey(key)) {
+            return customers.get(key).getCustomerId();
         } else {
             int id = nextId++;
-            customers.put(new Customer(id, firstName, lastName), id);
+            Customer customer = new Customer(id, firstName, lastName);
+            customers.put(customer, customer);
             return id;
         }
     }
@@ -44,11 +45,7 @@ public class CustomerManager {
      * @return the Customer object or null
      */
     public Customer getCustomer(String firstName, String lastName) {
-        for (Customer c : customers.keySet()) {
-            if (c.getFirstName().equals(firstName) && c.getLastName().equals(lastName)) {
-                return c;
-            }
-        }
-        return null;
+        Customer key = new Customer(0, firstName, lastName);
+        return customers.getOrDefault(key, null);
     }
 }
