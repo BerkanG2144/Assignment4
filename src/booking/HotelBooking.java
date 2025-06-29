@@ -24,34 +24,35 @@ public final class HotelBooking {
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Map<Integer, Hotel> hotels = new HashMap<>();
-        CustomerManager customerManager = new CustomerManager();
-        BookingManager bookingManager = new BookingManager();
-        boolean[] running = {true};
+        try (Scanner scanner = new Scanner(System.in)) {
+            Map<Integer, Hotel> hotels = new HashMap<>();
+            CustomerManager customerManager = new CustomerManager();
+            BookingManager bookingManager = new BookingManager();
+            boolean[] running = {true};
 
-        List<Command> commandList = List.of(
-                new AddHotelCommand(hotels),
-                new RemoveHotelCommand(hotels, bookingManager),
-                new AddRoomCommand(hotels),
-                new RemoveRoomCommand(hotels),
-                new ListRoomsCommand(hotels),
-                new FindAvailableCommand(hotels),
-                new FindCheapestCommand(hotels),
-                new BookCommand(hotels, customerManager, bookingManager),
-                new ListBookingsCommand(bookingManager),
-                new CancelCommand(bookingManager, hotels),
-                new QuitCommand(() -> running[0] = false)
-        );
 
-        Map<String, Command> commands = new HashMap<>();
-        for (Command c : commandList) {
-            commands.put(c.keyword(), c);
-        }
+            List<Command> commandList = List.of(
+                    new AddHotelCommand(hotels),
+                    new RemoveHotelCommand(hotels, bookingManager),
+                    new AddRoomCommand(hotels),
+                    new RemoveRoomCommand(hotels),
+                    new ListRoomsCommand(hotels),
+                    new FindAvailableCommand(hotels),
+                    new FindCheapestCommand(hotels),
+                    new BookCommand(hotels, customerManager, bookingManager),
+                    new ListBookingsCommand(bookingManager),
+                    new CancelCommand(bookingManager, hotels),
+                    new QuitCommand(() -> running[0] = false)
+            );
 
-        while (running[0]) {
-            String input = scanner.nextLine().trim();
-            String[] parts = input.split("\\s+");
+            Map<String, Command> commands = new HashMap<>();
+            for (Command c : commandList) {
+                commands.put(c.keyword(), c);
+            }
+
+            while (running[0]) {
+                String input = scanner.nextLine().trim();
+                String[] parts = input.split("\\s+");
 
             String commandKey = extractCommandKey(parts, commands);
 
@@ -60,10 +61,10 @@ public final class HotelBooking {
                 continue;
             }
 
-            commands.get(commandKey).execute(parts);
-        }
+                commands.get(commandKey).execute(parts);
+            }
 
-        scanner.close();
+        }
     }
 
     /**
