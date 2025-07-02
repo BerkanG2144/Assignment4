@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * Represents a room in a hotel.
- *
  * Each room has a unique number within a hotel, a category (e.g., Single, Double, Suite),
  * a price per night, and a list of bookings.
  *
@@ -17,6 +16,7 @@ public class Room {
     private final RoomCategory category;
     private final double price;
     private final List<Booking> bookings;
+
 
     /**
      * Constructs a new Room with the specified number, category, and price.
@@ -68,8 +68,8 @@ public class Room {
      */
     public boolean isAvailable(DateRange range) {
         for (Booking booking : bookings) {
-            if (!(range.to().compareTo(booking.dateRange().from()) <= 0
-                    || range.from().compareTo(booking.dateRange().to()) >= 0)) {
+            if (!(!range.to().isAfter(booking.dateRange().from())
+                    || !range.from().isBefore(booking.dateRange().to()))) {
                 return false;
             }
         }

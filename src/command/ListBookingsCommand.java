@@ -2,7 +2,6 @@ package command;
 
 import booking.Booking;
 import booking.BookingManager;
-import booking.Constants;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,6 +13,13 @@ import java.util.List;
  */
 public class ListBookingsCommand implements Command {
 
+    /** Error message when the 'list bookings' command usage is incorrect. */
+    public static final String ERROR_INVALID_LIST_BOOKINGS_COMMAND = "Error, invalid list bookings command";
+    /** Command keyword to list all active bookings. */
+    public static final String COMMAND_LIST_BOOKINGS = "list bookings";
+
+    private static final String OUTPUT_FORMAT = "%d %d %s %s%n";
+    private static final int EXPECTED_ARGUMENT_COUNT = 2;
     private final BookingManager bookingManager;
 
     /**
@@ -27,8 +33,8 @@ public class ListBookingsCommand implements Command {
 
     @Override
     public void execute(String[] args) {
-        if (args.length != 2) {
-            System.out.println(Constants.ERROR_INVALID_LIST_BOOKINGS_COMMAND);
+        if (args.length != EXPECTED_ARGUMENT_COUNT) {
+            System.out.println(ERROR_INVALID_LIST_BOOKINGS_COMMAND);
             return;
         }
 
@@ -49,7 +55,7 @@ public class ListBookingsCommand implements Command {
         });
 
         for (Booking booking : filtered) {
-            System.out.printf("%d %d %s %s%n",
+            System.out.printf(OUTPUT_FORMAT,
                     booking.bookingId(),
                     booking.customer().getCustomerId(),
                     booking.dateRange().from(),
@@ -61,7 +67,7 @@ public class ListBookingsCommand implements Command {
 
     @Override
     public String keyword() {
-        return Constants.COMMAND_LIST_BOOKINGS;
+        return COMMAND_LIST_BOOKINGS;
     }
 
 }

@@ -20,14 +20,6 @@ public enum RoomCategory {
         this.label = label;
     }
 
-    /**
-     * Returns the display label for the category.
-     *
-     * @return the label
-     */
-    public String label() {
-        return label;
-    }
 
     @Override
     public String toString() {

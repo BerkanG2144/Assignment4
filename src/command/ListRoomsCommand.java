@@ -1,6 +1,5 @@
 package command;
 
-import booking.Constants;
 import booking.Hotel;
 import booking.Room;
 
@@ -18,6 +17,14 @@ import java.util.Map;
  */
 public class ListRoomsCommand implements Command {
 
+    /** Command keyword to list all hotel rooms. */
+    public static final String COMMAND_LIST_ROOMS = "list rooms";
+    /** Error message when the input format or content is invalid. */
+    public static final String ERROR_INVALID_INPUT = "Error, invalid input";
+
+    private static final int EXPECTED_ARGUMENT_COUNT = 2;
+    private static final int EMPTY_LIST = 0;
+    private static final String OUTPUT_FORMAT = "%05d %d %s %.2f€";
     private final Map<Integer, Hotel> hotels;
 
     /**
@@ -31,8 +38,8 @@ public class ListRoomsCommand implements Command {
 
     @Override
     public void execute(String[] args) {
-        if (args.length != 2) {
-            System.out.println(Constants.ERROR_INVALID_INPUT);
+        if (args.length != EXPECTED_ARGUMENT_COUNT) {
+            System.out.println(ERROR_INVALID_INPUT);
             return;
         }
 
@@ -61,7 +68,7 @@ public class ListRoomsCommand implements Command {
         @Override
         public int compareTo(RoomEntry other) {
             int result = Integer.compare(this.hotelId, other.hotelId);
-            if (result != 0) {
+            if (result != EMPTY_LIST) {
                 return result;
             }
             return Integer.compare(this.room.getNumber(), other.room.getNumber());
@@ -69,7 +76,7 @@ public class ListRoomsCommand implements Command {
 
         @Override
         public String toString() {
-            return String.format("%05d %d %s %.2f€",
+            return String.format(OUTPUT_FORMAT,
                     hotelId,
                     room.getNumber(),
                     room.getCategory(),
@@ -79,6 +86,6 @@ public class ListRoomsCommand implements Command {
 
     @Override
     public String keyword() {
-        return Constants.COMMAND_LIST_ROOMS;
+        return COMMAND_LIST_ROOMS;
     }
 }

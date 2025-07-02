@@ -1,17 +1,6 @@
 package booking;
 
-import command.AddRoomCommand;
-import command.AddHotelCommand;
-import command.BookCommand;
-import command.CancelCommand;
-import command.FindCheapestCommand;
-import command.FindAvailableCommand;
-import command.ListRoomsCommand;
-import command.ListBookingsCommand;
-import command.QuitCommand;
-import command.RemoveRoomCommand;
-import command.RemoveHotelCommand;
-import command.Command;
+import command.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +14,18 @@ import java.util.Scanner;
  * @author ujnaa
  */
 public final class HotelBooking {
+
+    /** Error message when the entered command is not recognized by the system. */
+    public static final String ERROR_UNKNOWN_COMMAND = "Error, unknown command";
+
+    private static final int RUNNING_FLAG_INDEX = 0;
+    private static final int DEFAULT_COMMAND_INDEX = 0;
+    private static final int FIRST_INDEX = 0;
+    private static final int SECOND_INDEX = 1;
+    private static final int MIN_COMMAND_PARTS = 2;
+    private static final String WHITESPACE_REGEX = "\\s+";
+    private static final String SPACE = " ";
+
 
     private HotelBooking() {
         // prevents instantiation
@@ -53,7 +54,7 @@ public final class HotelBooking {
                     new BookCommand(hotels, customerManager, bookingManager),
                     new ListBookingsCommand(bookingManager),
                     new CancelCommand(bookingManager, hotels),
-                    new QuitCommand(() -> running[0] = false)
+                    new QuitCommand(() -> running[RUNNING_FLAG_INDEX] = false)
             );
 
             Map<String, Command> commands = new HashMap<>();
@@ -61,14 +62,14 @@ public final class HotelBooking {
                 commands.put(c.keyword(), c);
             }
 
-            while (running[0]) {
+            while (running[RUNNING_FLAG_INDEX]) {
                 String input = scanner.nextLine().trim();
-                String[] parts = input.split("\\s+");
+                String[] parts = input.split(WHITESPACE_REGEX);
 
                 String commandKey = extractCommandKey(parts, commands);
 
                 if (commandKey == null) {
-                    System.out.println(Constants.ERROR_UNKNOWN_COMMAND);
+                    System.out.println(ERROR_UNKNOWN_COMMAND);
                     continue;
                 }
 
@@ -86,16 +87,15 @@ public final class HotelBooking {
      * @return the matched command key or null if unknown
      */
     private static String extractCommandKey(String[] parts, Map<String, Command> commands) {
-        if (parts.length >= 2) {
-            String twoWord = parts[0] + " " + parts[1];
+        if (parts.length >= MIN_COMMAND_PARTS) {
+            String twoWord = parts[FIRST_INDEX] + SPACE + parts[SECOND_INDEX];
             if (commands.containsKey(twoWord)) {
                 return twoWord;
             }
         }
-        if (commands.containsKey(parts[0])) {
-            return parts[0];
+        if (commands.containsKey(parts[DEFAULT_COMMAND_INDEX])) {
+            return parts[DEFAULT_COMMAND_INDEX];
         }
         return null;
-
     }
 }

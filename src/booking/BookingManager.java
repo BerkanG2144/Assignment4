@@ -4,10 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Manages all bookings in the system.
- *
  * Provides functionality to create, cancel, retrieve, and list bookings.
  * Each booking is assigned a unique booking ID starting from 1.
  *
@@ -15,8 +13,9 @@ import java.util.Map;
  */
 public class BookingManager {
 
+    private static final int INITIAL_BOOKING_ID = 1;
     private final Map<Integer, Booking> bookings = new HashMap<>();
-    private int bookingIdGenerator = Constants.INITIAL_BOOKING_ID;
+    private int bookingIdGenerator = INITIAL_BOOKING_ID;
 
 
     /**

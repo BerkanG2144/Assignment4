@@ -35,23 +35,6 @@ public final class Customer {
         return customerId;
     }
 
-    /**
-     * Returns the customer's first name.
-     *
-     * @return the first name
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Returns the customer's last name.
-     *
-     * @return the last name
-     */
-    public String getLastName() {
-        return lastName;
-    }
 
     /**
      * Checks whether this customer equals another object.

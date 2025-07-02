@@ -1,16 +1,14 @@
 package command;
 
+import booking.Booking;
 import booking.BookingManager;
 import booking.Hotel;
-import booking.Constants;
 import booking.Room;
-import booking.Booking;
 
 import java.util.Map;
 
 /**
  * Command to cancel a booking.
- *
  * Usage: {@code cancel <BookingID> <CustomerID>}
  *
  * The booking is cancelled only if it exists, is not already cancelled, and belongs to the given customer.
@@ -20,6 +18,22 @@ import java.util.Map;
  */
 public class CancelCommand implements Command {
 
+    /** Error message when the format of the cancel command is invalid. */
+    public static final String ERROR_INVALID_CANCEL_FORMAT = "Error, invalid cancel format";
+    /** Error message when no booking with the specified ID exists. */
+    public static final String ERROR_BOOKING_NOT_FOUND = "Error, booking not found";
+    /** Error message when the provided customer ID does not match the booking. */
+    public static final String ERROR_CUSTOMER_MISMATCH = "Error, customer mismatch";
+    /** Error message when one or more provided numbers are invalid. */
+    public static final String ERROR_INVALID_NUMBERS = "Error, invalid numbers";
+    /** Success message for valid command execution. */
+    public static final String MESSAGE_OK = "OK";
+    /** Command keyword to cancel a booking. */
+    public static final String COMMAND_CANCEL = "cancel";
+
+    private static final int EXPECTED_ARGUMENT_COUNT = 3;
+    private static final int INDEX_BOOKING_ID = 1;
+    private static final int INDEX_CUSTOMER_ID = 2;
     private final BookingManager bookingManager;
     private final Map<Integer, Hotel> hotels;
 
@@ -41,23 +55,23 @@ public class CancelCommand implements Command {
      */
     @Override
     public void execute(String[] args) {
-        if (args.length != 3) {
-            System.out.println(Constants.ERROR_INVALID_CANCEL_FORMAT);
+        if (args.length != EXPECTED_ARGUMENT_COUNT) {
+            System.out.println(ERROR_INVALID_CANCEL_FORMAT);
             return;
         }
 
         try {
-            int bookingId = Integer.parseInt(args[1]);
-            int customerId = Integer.parseInt(args[2]);
+            int bookingId = Integer.parseInt(args[INDEX_BOOKING_ID]);
+            int customerId = Integer.parseInt(args[INDEX_CUSTOMER_ID]);
 
             Booking booking = bookingManager.getBookingById(bookingId);
             if (booking == null || booking.isCancelled()) {
-                System.out.println(Constants.ERROR_BOOKING_NOT_FOUND);
+                System.out.println(ERROR_BOOKING_NOT_FOUND);
                 return;
             }
 
             if (booking.customer().getCustomerId() != customerId) {
-                System.out.println(Constants.ERROR_CUSTOMER_MISMATCH);
+                System.out.println(ERROR_CUSTOMER_MISMATCH);
                 return;
             }
 
@@ -70,10 +84,10 @@ public class CancelCommand implements Command {
             }
 
             bookingManager.cancelBooking(bookingId);
-            System.out.println(Constants.MESSAGE_OK);
+            System.out.println(MESSAGE_OK);
 
         } catch (NumberFormatException e) {
-            System.out.println(Constants.ERROR_INVALID_NUMBERS);
+            System.out.println(ERROR_INVALID_NUMBERS);
         }
     }
 
@@ -84,6 +98,6 @@ public class CancelCommand implements Command {
      */
     @Override
     public String keyword() {
-        return Constants.COMMAND_CANCEL;
+        return COMMAND_CANCEL;
     }
 }

@@ -74,19 +74,17 @@ public class Hotel {
      * Adds a new room to the hotel if no room with the same number exists.
      *
      * @param room the room to be added
-     * @return true if the room was added successfully, false if a room with the same number already exists
      */
-    public boolean addRoom(Room room) {
-        return rooms.putIfAbsent(room.getNumber(), room) == null;
+    public void addRoom(Room room) {
+        rooms.putIfAbsent(room.getNumber(), room);
     }
 
     /**
      * Removes a room with the given room number.
      *
      * @param number the room number to remove
-     * @return the removed room, or null if no such room existed
      */
-    public Room removeRoom(int number) {
-        return rooms.remove(number);
+    public void removeRoom(int number) {
+        rooms.remove(number);
     }
 }

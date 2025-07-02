@@ -1,10 +1,7 @@
 package command;
 
-import booking.Constants;
-
 /**
  * Command to quit the booking system.
- *
  * Usage: {@code quit}
  *
  * Invokes a callback to stop the main loop without calling the JVM directly.
@@ -13,6 +10,12 @@ import booking.Constants;
  */
 public class QuitCommand implements Command {
 
+    /** Command keyword to terminate the hotel booking system. */
+    public static final String COMMAND_QUIT = "quit";
+    /** Error message when the 'quit' command is used incorrectly (e.g., with extra parameters). */
+    public static final String ERROR_INVALID_QUIT_COMMAND = "Error, invalid quit command";
+
+    private static final int EXPECTED_ARGUMENT_COUNT = 1;
     private final Runnable quitCallback;
 
     /**
@@ -26,15 +29,15 @@ public class QuitCommand implements Command {
 
     @Override
     public void execute(String[] args) {
-        if (args.length != 1) {
-            System.out.println(Constants.ERROR_INVALID_QUIT_COMMAND);
+        if (args.length != EXPECTED_ARGUMENT_COUNT) {
+            System.out.println(ERROR_INVALID_QUIT_COMMAND);
             return;
         }
-        quitCallback.run(); // Beendet die Schleife in main
+        quitCallback.run();
     }
 
     @Override
     public String keyword() {
-        return Constants.COMMAND_QUIT;
+        return COMMAND_QUIT;
     }
 }

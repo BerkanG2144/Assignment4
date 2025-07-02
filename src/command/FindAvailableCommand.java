@@ -1,11 +1,6 @@
 package command;
 
-import booking.Hotel;
-import booking.Constants;
-import booking.Room;
-import booking.DateRange;
-import booking.RoomCategory;
-import booking.AvailableRoom;
+import booking.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -22,6 +17,23 @@ import java.util.Map;
  */
 public class FindAvailableCommand implements Command {
 
+    /** Error message when the provided date format does not match the required pattern (YYYY-MM-DD). */
+    public static final String ERROR_INVALID_DATE_FORMAT = "Error, invalid date format";
+    /** Error message when the start date is not before the end date. */
+    public static final String ERROR_START_DATE_BEFORE_END = "Error, start date must be before end date";
+    /** Error message when the 'find available' command usage is incorrect. */
+    public static final String ERROR_USAGE_FIND_AVAILABLE =
+            "Error, find available <City> <Category> <Start> <End>";
+    /** Command keyword to search for available rooms. */
+    public static final String COMMAND_FIND_AVAILABLE = "find available";
+
+    private static final String OUTPUT_FORMAT = "%05d %d %.2f€%n";
+    private static final int EXPECTED_ARGUMENT_COUNT = 6;
+    private static final int INDEX_CITY = 2;
+    private static final int INDEX_CATEGORY = 3;
+    private static final int INDEX_FROM_DATE = 4;
+    private static final int INDEX_TO_DATE = 5;
+    private static final int EMPTY_LIST_SIZE = 0;
     private final Map<Integer, Hotel> hotels;
 
     /**
@@ -35,31 +47,31 @@ public class FindAvailableCommand implements Command {
 
     @Override
     public void execute(String[] args) {
-        if (args.length != 6) {
-            System.out.println(Constants.ERROR_USAGE_FIND_AVAILABLE);
+        if (args.length != EXPECTED_ARGUMENT_COUNT) {
+            System.out.println(ERROR_USAGE_FIND_AVAILABLE);
             return;
         }
-        String city = args[2];
-        RoomCategory category = RoomCategory.fromString(args[3]);
+        String city = args[INDEX_CITY];
+        RoomCategory category = RoomCategory.fromString(args[INDEX_CATEGORY]);
         LocalDate from;
         LocalDate to;
 
         try {
-            from = LocalDate.parse(args[4]);
-            to = LocalDate.parse(args[5]);
+            from = LocalDate.parse(args[INDEX_FROM_DATE]);
+            to = LocalDate.parse(args[INDEX_TO_DATE]);
 
             if (!from.isBefore(to)) {
-                System.out.println(Constants.ERROR_START_DATE_BEFORE_END);
+                System.out.println(ERROR_START_DATE_BEFORE_END);
                 return;
             }
 
             if (category == null) {
-                System.out.println(Constants.ERROR_USAGE_FIND_AVAILABLE);
+                System.out.println(ERROR_USAGE_FIND_AVAILABLE);
                 return;
             }
 
         } catch (DateTimeParseException e) {
-            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
+            System.out.println(ERROR_INVALID_DATE_FORMAT);
             return;
         }
 
@@ -83,7 +95,7 @@ public class FindAvailableCommand implements Command {
             @Override
             public int compare(AvailableRoom a, AvailableRoom b) {
                 int hotelCmp = Integer.compare(a.hotelId(), b.hotelId());
-                if (hotelCmp != 0) {
+                if (hotelCmp != EMPTY_LIST_SIZE) {
                     return hotelCmp;
                 }
                 return Integer.compare(a.roomNumber(), b.roomNumber());
@@ -91,13 +103,13 @@ public class FindAvailableCommand implements Command {
         });
 
         for (AvailableRoom room : result) {
-            System.out.printf("%05d %d %.2f€%n", room.hotelId(), room.roomNumber(), room.price());
+            System.out.printf(OUTPUT_FORMAT, room.hotelId(), room.roomNumber(), room.price());
         }
     }
 
     @Override
     public String keyword() {
-        return Constants.COMMAND_FIND_AVAILABLE;
+        return COMMAND_FIND_AVAILABLE;
     }
 
 }

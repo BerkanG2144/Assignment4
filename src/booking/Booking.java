@@ -2,17 +2,22 @@ package booking;
 
 import java.util.Objects;
 
+
 /**
  * Represents a booking made by a customer.
- *
  * A booking includes a unique booking ID, the customer who made the booking,
  * a date range representing the booking period, and a cancellation status.
- * Once a booking is cancelled, it cannot be reactivated.
  *
  * @author ujnaa
  */
 public final class Booking {
 
+    private static final String PREFIX = "Booking[";
+    private static final String FIELD_BOOKING_ID = "bookingId=";
+    private static final String FIELD_CUSTOMER = "customer=";
+    private static final String FIELD_DATE_RANGE = "dateRange=";
+    private static final String COMMA_SEPARATOR = ", ";
+    private static final String SUFFIX = "]";
     private final int bookingId;
     private final Customer customer;
     private final DateRange dateRange;
@@ -114,9 +119,9 @@ public final class Booking {
      */
     @Override
     public String toString() {
-        return "Booking["
-                + "bookingId=" + bookingId + ", "
-                + "customer=" + customer + ", "
-                + "dateRange=" + dateRange + ']';
+        return PREFIX
+                + FIELD_BOOKING_ID + bookingId + COMMA_SEPARATOR
+                + FIELD_CUSTOMER + customer + COMMA_SEPARATOR
+                + FIELD_DATE_RANGE + dateRange + SUFFIX;
     }
 }

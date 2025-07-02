@@ -1,20 +1,13 @@
 package command;
 
-import booking.BookingManager;
-import booking.CustomerManager;
-import booking.Hotel;
-import booking.Constants;
-import booking.Room;
-import booking.DateRange;
-import booking.Customer;
-import booking.Booking;
+import booking.*;
 
 import java.time.LocalDate;
 import java.util.Map;
 
+
 /**
  * Command to book a room for a customer.
- *
  * A new booking and customer are created if valid. If a customer already exists
  * (same name), their existing ID is reused.
  *
@@ -22,6 +15,31 @@ import java.util.Map;
  */
 public class BookCommand implements Command {
 
+    /** Error message for general invalid input format. */
+    public static final String ERROR_INVALID_FORMAT = "Error, invalid format";
+    /** Error message for incorrectly formatted date input. */
+    public static final String ERROR_INVALID_DATE_FORMAT = "Error, invalid date format";
+    /** Command keyword to book a hotel room. */
+    public static final String COMMAND_BOOK = "book";
+    /** Error message when the date range is not valid (e.g., start is after end). */
+    public static final String ERROR_INVALID_DATE_RANGE = "Error, invalid date range";
+    /** Error message when the room is not available during the requested period. */
+    public static final String ERROR_ROOM_NOT_AVAILABLE = "Error, room not available";
+    /** Error message when a room with the given ID was not found. */
+    public static final String ERROR_ROOM_NOT_FOUND = "Error, room not found";
+    /** Error message when a hotel with the given ID was not found. */
+    public static final String ERROR_HOTEL_NOT_FOUND = "Error, hotel not found";
+    /** Error message when number format is invalid (e.g., non-numeric input). */
+    public static final String ERROR_INVALID_NUMBER_FORMAT = "Error, invalid number format";
+
+    private static final int EXPECTED_ARGUMENT_COUNT = 7;
+    private static final int INDEX_HOTEL_ID = 1;
+    private static final int INDEX_ROOM_NUMBER = 2;
+    private static final int INDEX_FROM_DATE = 3;
+    private static final int INDEX_TO_DATE = 4;
+    private static final int INDEX_FIRST_NAME = 5;
+    private static final int INDEX_LAST_NAME = 6;
+    private static final String SPACE = " ";
     private final Map<Integer, Hotel> hotels;
     private final CustomerManager customerManager;
     private final BookingManager bookingManager;
@@ -49,43 +67,43 @@ public class BookCommand implements Command {
      */
     @Override
     public void execute(String[] args) {
-        if (args.length != 7) {
-            System.out.println(Constants.ERROR_INVALID_FORMAT);
+        if (args.length != EXPECTED_ARGUMENT_COUNT) {
+            System.out.println(ERROR_INVALID_FORMAT);
             return;
         }
 
         try {
-            int hotelId = Integer.parseInt(args[1]);
-            int roomNumber = Integer.parseInt(args[2]);
-            String fromStr = args[3];
-            String toStr = args[4];
-            String firstName = args[5];
-            String lastName = args[6];
+            int hotelId = Integer.parseInt(args[INDEX_HOTEL_ID]);
+            int roomNumber = Integer.parseInt(args[INDEX_ROOM_NUMBER]);
+            String fromStr = args[INDEX_FROM_DATE];
+            String toStr = args[INDEX_TO_DATE];
+            String firstName = args[INDEX_FIRST_NAME];
+            String lastName = args[INDEX_LAST_NAME];
 
             LocalDate from = LocalDate.parse(fromStr);
             LocalDate to = LocalDate.parse(toStr);
 
             if (!from.isBefore(to)) {
-                System.out.println(Constants.ERROR_INVALID_DATE_RANGE);
+                System.out.println(ERROR_INVALID_DATE_RANGE);
                 return;
             }
 
             Hotel hotel = hotels.get(hotelId);
             if (hotel == null) {
-                System.out.println(Constants.ERROR_HOTEL_NOT_FOUND);
+                System.out.println(ERROR_HOTEL_NOT_FOUND);
                 return;
             }
 
             Room room = hotel.getRooms().get(roomNumber);
             if (room == null) {
-                System.out.println(Constants.ERROR_ROOM_NOT_FOUND);
+                System.out.println(ERROR_ROOM_NOT_FOUND);
                 return;
             }
 
             DateRange range = new DateRange(from, to);
 
             if (!room.isAvailable(range)) {
-                System.out.println(Constants.ERROR_ROOM_NOT_AVAILABLE);
+                System.out.println(ERROR_ROOM_NOT_AVAILABLE);
                 return;
             }
 
@@ -95,12 +113,12 @@ public class BookCommand implements Command {
             Booking booking = bookingManager.createBooking(customer, range);
             room.addBooking(booking);
 
-            System.out.println(booking.bookingId() + " " + customerId);
+            System.out.println(booking.bookingId() + SPACE + customerId);
 
         } catch (NumberFormatException e) {
-            System.out.println(Constants.ERROR_INVALID_NUMBER_FORMAT);
+            System.out.println(ERROR_INVALID_NUMBER_FORMAT);
         } catch (java.time.format.DateTimeParseException e) {
-            System.out.println(Constants.ERROR_INVALID_DATE_FORMAT);
+            System.out.println(ERROR_INVALID_DATE_FORMAT);
         }
     }
 
@@ -112,6 +130,6 @@ public class BookCommand implements Command {
          */
     @Override
     public String keyword() {
-        return Constants.COMMAND_BOOK;
+        return COMMAND_BOOK;
     }
 }

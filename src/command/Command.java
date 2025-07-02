@@ -2,7 +2,6 @@ package command;
 
 /**
  * Represents a console command to be executed in the hotel booking system.
- *
  * Each command must define its execution behavior and the keyword it responds to.
  *
  * @author ujnaa
